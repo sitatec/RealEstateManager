@@ -2,17 +2,20 @@ package com.berete.realestatemanager.domain.models;
 
 public class Photo {
 
-  private final long id;
+  private int id;
   private final String url;
   private final String description;
 
-  public Photo(long id, String url, String description) {
-    this.id = id;
+  public Photo(String url, String description) {
     this.url = url;
     this.description = description;
   }
 
-  public long getId() {
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getId() {
     return id;
   }
 

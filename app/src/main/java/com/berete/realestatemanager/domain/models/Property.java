@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Property {
 
-  private long id;
+  private int id;
   private Type type;
   private double price;
   private double surface;
@@ -19,7 +19,6 @@ public class Property {
   private RealEstateAgent agent;
 
   public Property(
-      long id,
       Type type,
       double price,
       double surface,
@@ -32,7 +31,6 @@ public class Property {
       long availableSince,
       long saleDate,
       RealEstateAgent agent) {
-    this.id = id;
     this.type = type;
     this.price = price;
     this.surface = surface;
@@ -47,11 +45,11 @@ public class Property {
     this.agent = agent;
   }
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
