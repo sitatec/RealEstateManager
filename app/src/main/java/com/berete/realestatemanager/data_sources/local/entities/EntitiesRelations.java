@@ -6,44 +6,39 @@ import androidx.room.Entity;
 import androidx.room.Junction;
 import androidx.room.Relation;
 
-import com.berete.realestatemanager.domain.models.Photo;
 
 import java.util.List;
 
 public interface EntitiesRelations {
 
-  class RealEstateAgentWithPhotoAndProperties {
+  class RealEstateAgentWithProperties {
 
-    @Embedded private RealEstateAgentEntity realEstateAgent;
-
-    @Relation(parentColumn = "id", entityColumn = "owner_id")
-    private PhotoEntity photo;
+    @Embedded public RealEstateAgentEntity realEstateAgent;
 
     @Relation(parentColumn = "id", entityColumn = "agent_id", entity = PropertyEntity.class)
-    private List<PropertyWithPhotosAndPointOfInterest> properties;
+    public List<PropertyWithPhotosAndPointOfInterest> properties;
   }
-
 
   class PropertyWithPhotosAndPointOfInterest {
 
     @Embedded
     public PropertyEntity property;
 
-    @Relation(parentColumn = "id", entityColumn = "owner_id")
-    public List<Photo> photos;
-
     @Relation(
-        parentColumn = "property_id",
+        parentColumn = "id",
         entityColumn = "point_of_interest_id",
         associateBy = @Junction(PropertyPointOfInterestCrossRef.class))
     public List<PointOfInterestEntity> pointOfInterest;
+
+    @Relation(parentColumn = "id", entityColumn = "property_id")
+    public List<PhotoEntity> photos;
+
   }
 
-
-  @Entity(primaryKeys = {"property_id", "point_of_interest_id"})
+  @Entity(primaryKeys = {"id", "point_of_interest_id"})
   class PropertyPointOfInterestCrossRef {
 
-    @ColumnInfo(name = "property_id")
+    @ColumnInfo(name = "id")
     public int propertyId;
 
     @ColumnInfo(name = "point_of_interest_id")

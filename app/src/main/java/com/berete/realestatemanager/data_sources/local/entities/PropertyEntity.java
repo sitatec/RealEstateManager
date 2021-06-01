@@ -13,14 +13,14 @@ import com.berete.realestatemanager.domain.models.RealEstateAgent;
 
 import java.util.List;
 
-@Entity(tableName = "property")
+@Entity(tableName = "property", ignoredColumns = {"photoList", "pointOfInterestNearby", "agent"})
 public class PropertyEntity extends Property {
 
   @PrimaryKey(autoGenerate = true)
   public int id;
 
   @ColumnInfo(name = "agent_id")
-  private int agentID;
+  public int agentID;
 
   @Embedded private Address address;
 
@@ -30,27 +30,23 @@ public class PropertyEntity extends Property {
       double surface,
       int numberOfRooms,
       String description,
-      List<Photo> photoList,
       Address address,
-      List<PointOrInterest> pointOfInterestNearby,
       boolean isAvailable,
       long availableSince,
-      long saleDate,
-      RealEstateAgent agent) {
+      long saleDate) {
     super(
         type,
         price,
         surface,
         numberOfRooms,
         description,
-        photoList,
+        null,
         address,
-        pointOfInterestNearby,
+        null,
         isAvailable,
         availableSince,
         saleDate,
-        agent);
+        null);
   }
-
 
 }

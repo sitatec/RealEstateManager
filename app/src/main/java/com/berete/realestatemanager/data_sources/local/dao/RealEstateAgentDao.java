@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.berete.realestatemanager.data_sources.local.entities.EntitiesRelations;
@@ -14,14 +15,15 @@ import java.util.List;
 @Dao
 public interface RealEstateAgentDao {
   @Update
-  void update(RealEstateAgentEntity property);
+  void update(RealEstateAgentEntity agent);
 
   @Delete
-  void delete(RealEstateAgentEntity property);
+  void delete(RealEstateAgentEntity agent);
 
   @Insert
-  void create(RealEstateAgentEntity property);
+  void create(RealEstateAgentEntity agent);
 
+  @Transaction
   @Query("SELECT * FROM real_estate_agent")
-  List<EntitiesRelations.RealEstateAgentWithPhotoAndProperties> getAllAgentProperties();
+  List<EntitiesRelations.RealEstateAgentWithProperties> getAllAgentWithProperties();
 }

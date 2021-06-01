@@ -8,7 +8,6 @@ import com.berete.realestatemanager.domain.models.RealEstateAgent;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.*;
@@ -22,7 +21,7 @@ public class PropertyRepositoryTest {
   private PropertyProvider propertyProvider;
   private PropertyRepository propertyRepository;
   private final Photo fakePhoto = new Photo("url", "desc");
-  private final RealEstateAgent fakeAgent = new RealEstateAgent("name", fakePhoto);
+  private final RealEstateAgent fakeAgent = new RealEstateAgent("name", "PhotoUrl");
   private final Property.Address fakeAddress = new Property.Address("locality", "postalCode", "formattedAddr");
   private final Property fakeProperty =
       new Property(

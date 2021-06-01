@@ -6,17 +6,18 @@ import androidx.room.Insert;
 import androidx.room.Update;
 
 import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
+import com.berete.realestatemanager.data_sources.local.entities.PointOfInterestEntity;
 
 @Dao
-public interface PhotoDao {
+public interface PointOfInterestDao {
 
   @Update
-  void update(PhotoEntity photo);
+  void update(PointOfInterestEntity pointOfInterest);
 
   @Delete
-  void delete(PhotoEntity photo);
+  void delete(PointOfInterestEntity pointOfInterest);
 
   @Insert
-  void create(PhotoEntity photo);
+  void create(PointOfInterestEntity pointOfInterest);
 
 }

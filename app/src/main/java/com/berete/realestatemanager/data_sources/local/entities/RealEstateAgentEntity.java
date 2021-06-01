@@ -4,7 +4,6 @@ package com.berete.realestatemanager.data_sources.local.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.berete.realestatemanager.domain.models.Photo;
 import com.berete.realestatemanager.domain.models.RealEstateAgent;
 
 
@@ -14,8 +13,7 @@ public class RealEstateAgentEntity extends RealEstateAgent {
   @PrimaryKey(autoGenerate = true)
   public int id;
 
-  public RealEstateAgentEntity(String name, Photo photo) {
-    super(name, photo);
+  public RealEstateAgentEntity(String name, String photoUrl) {
+    super(name, photoUrl);
   }
-
 }
