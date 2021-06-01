@@ -7,13 +7,17 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.berete.realestatemanager.data_sources.local.entities.EntitiesRelations;
+import com.berete.realestatemanager.data_sources.local.entities.Relationships;
 import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
 
 import java.util.List;
 
 @Dao
 public interface RealEstateAgentDao {
+
+  @Query("SELECT * FROM real_estate_agent WHERE id=:id")
+  RealEstateAgentEntity getById(int id);
+
   @Update
   void update(RealEstateAgentEntity agent);
 
@@ -25,5 +29,5 @@ public interface RealEstateAgentDao {
 
   @Transaction
   @Query("SELECT * FROM real_estate_agent")
-  List<EntitiesRelations.RealEstateAgentWithProperties> getAllAgentWithProperties();
+  List<Relationships.RealEstateAgentWithProperties> getAllAgentWithProperties();
 }

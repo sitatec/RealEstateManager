@@ -19,4 +19,8 @@ public class PhotoEntity extends Photo {
   public PhotoEntity(String url, String description) {
     super(url, description);
   }
+
+  public Photo toModel(){
+    return this;
+  }
 }

@@ -1,6 +1,5 @@
 package com.berete.realestatemanager.data_sources.local;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.room.Room;
@@ -11,12 +10,11 @@ import com.berete.realestatemanager.data_sources.local.dao.PointOfInterestDao;
 import com.berete.realestatemanager.data_sources.local.dao.PropertyDao;
 import com.berete.realestatemanager.data_sources.local.dao.PropertyPointOfInterestCrossRefDao;
 import com.berete.realestatemanager.data_sources.local.dao.RealEstateAgentDao;
-import com.berete.realestatemanager.data_sources.local.entities.EntitiesRelations;
+import com.berete.realestatemanager.data_sources.local.entities.Relationships;
 import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
 import com.berete.realestatemanager.data_sources.local.entities.PointOfInterestEntity;
 import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
 import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
-import com.berete.realestatemanager.domain.models.RealEstateAgent;
 
 @androidx.room.Database(
     entities = {
@@ -24,7 +22,7 @@ import com.berete.realestatemanager.domain.models.RealEstateAgent;
       PhotoEntity.class,
       RealEstateAgentEntity.class,
       PointOfInterestEntity.class,
-      EntitiesRelations.PropertyPointOfInterestCrossRef.class
+      Relationships.PropertyPointOfInterestCrossRef.class
     },
     version = 1,
     exportSchema = false)

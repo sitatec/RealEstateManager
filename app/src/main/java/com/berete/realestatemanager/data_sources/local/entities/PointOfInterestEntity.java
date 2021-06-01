@@ -16,4 +16,8 @@ public class PointOfInterestEntity extends Property.PointOrInterest {
   public PointOfInterestEntity(String name) {
     super(name);
   }
+
+  public PointOfInterestEntity toModel(){
+    return this;
+  }
 }

@@ -97,8 +97,9 @@ public class Property {
     return photoList;
   }
 
-  public void setPhotoList(List<Photo> photoList) {
-    this.photoList = photoList;
+  @SuppressWarnings("unchecked")
+  public void setPhotoList(List<? extends Photo> photoList) {
+    this.photoList = (List<Photo>) photoList;
   }
 
   public Address getAddress() {
@@ -110,11 +111,12 @@ public class Property {
   }
 
   public List<PointOrInterest> getPointOfInterestNearby() {
-    return pointOfInterestNearby;
+    return  pointOfInterestNearby;
   }
 
-  public void setPointOfInterestNearby(List<PointOrInterest> pointOfInterestNearby) {
-    this.pointOfInterestNearby = pointOfInterestNearby;
+  @SuppressWarnings("unchecked")
+  public void setPointOfInterestNearby(List<? extends PointOrInterest> pointOfInterestNearby) {
+    this.pointOfInterestNearby = (List<PointOrInterest>) pointOfInterestNearby;
   }
 
   public boolean isAvailable() {

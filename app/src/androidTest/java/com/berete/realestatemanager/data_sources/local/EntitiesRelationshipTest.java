@@ -2,9 +2,9 @@ package com.berete.realestatemanager.data_sources.local;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import com.berete.realestatemanager.data_sources.local.entities.EntitiesRelations;
-import com.berete.realestatemanager.data_sources.local.entities.EntitiesRelations.PropertyPointOfInterestCrossRef;
-import com.berete.realestatemanager.data_sources.local.entities.EntitiesRelations.RealEstateAgentWithProperties;
+import com.berete.realestatemanager.data_sources.local.entities.Relationships;
+import com.berete.realestatemanager.data_sources.local.entities.Relationships.PropertyPointOfInterestCrossRef;
+import com.berete.realestatemanager.data_sources.local.entities.Relationships.RealEstateAgentWithProperties;
 import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
 import com.berete.realestatemanager.data_sources.local.entities.PointOfInterestEntity;
 import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
@@ -56,8 +56,8 @@ public class EntitiesRelationshipTest {
   public void returned_entities_should_match_the_defined_relationship() {
     final List<RealEstateAgentWithProperties> agentWithProperties =
         database.getRealEstateAgentDao().getAllAgentWithProperties();
-    final List<EntitiesRelations.PropertyWithPhotosAndPointOfInterest> propertiesFromDb =
-        agentWithProperties.get(0).properties;
+    final List<Relationships.PropertyWithPhotosAndPointOfInterest> propertiesFromDb =
+        agentWithProperties.get(0).tempProperties;
     final RealEstateAgentEntity agentFromDb = agentWithProperties.get(0).realEstateAgent;
 
     // AGENT
@@ -74,8 +74,8 @@ public class EntitiesRelationshipTest {
   public void entities_from_the_database_should_contain_embedded_Objects() {
     final List<RealEstateAgentWithProperties> agentWithProperties =
         database.getRealEstateAgentDao().getAllAgentWithProperties();
-    final List<EntitiesRelations.PropertyWithPhotosAndPointOfInterest> properties =
-        agentWithProperties.get(0).properties;
+    final List<Relationships.PropertyWithPhotosAndPointOfInterest> properties =
+        agentWithProperties.get(0).tempProperties;
 
     assertEquals(
         properties.get(0).property.getAddress().getLocality(),

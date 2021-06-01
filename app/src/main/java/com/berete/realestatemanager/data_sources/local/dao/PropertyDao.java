@@ -8,14 +8,13 @@ import androidx.room.Update;
 
 
 import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
-import com.berete.realestatemanager.domain.models.Property;
 
 import java.util.List;
 
 @Dao
 public interface PropertyDao {
 
-  @Query("SELECT * FROM property WHERE id=:id")
+  @Query("SELECT * FROM property WHERE property_id=:id")
   PropertyEntity getById(int id);
 
   @Query("SELECT * FROM property")
