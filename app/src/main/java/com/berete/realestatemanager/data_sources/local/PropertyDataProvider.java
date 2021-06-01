@@ -10,6 +10,7 @@ import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
 import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
 import com.berete.realestatemanager.data_sources.local.entities.Relationships.RealEstateAgentWithProperties;
 import com.berete.realestatemanager.domain.data_providers.PropertyProvider;
+import com.berete.realestatemanager.domain.models.Photo;
 import com.berete.realestatemanager.domain.models.Property;
 
 import java.util.ArrayList;
@@ -65,16 +66,12 @@ public class PropertyDataProvider implements PropertyProvider {
 
   @Override
   public void update(Property property) {
-    final PropertyEntity propertyEntity  = new PropertyEntity(property);
-    propertyEntity.id = property.getId();
-    propertyDao.update(propertyEntity);
+    propertyDao.update(new PropertyEntity(property));
   }
 
   @Override
   public void delete(Property property) {
-    final PropertyEntity propertyEntity  = new PropertyEntity(property);
-    propertyEntity.id = property.getId();
-    propertyDao.delete(propertyEntity);
+    propertyDao.delete(new PropertyEntity(property));
   }
 
   @Override

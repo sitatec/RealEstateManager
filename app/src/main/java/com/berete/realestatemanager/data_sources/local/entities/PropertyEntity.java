@@ -66,5 +66,6 @@ public class PropertyEntity extends Property {
         parent.getAvailableSince(),
         parent.getSaleDate(),
         parent.getAgent());
+    id = parent.getId();
   }
 }

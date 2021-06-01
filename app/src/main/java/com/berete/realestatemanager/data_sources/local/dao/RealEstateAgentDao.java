@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface RealEstateAgentDao {
 
-  @Query("SELECT * FROM real_estate_agent WHERE id=:id")
+  @Query("SELECT * FROM real_estate_agent WHERE agent_id=:id")
   RealEstateAgentEntity getById(int id);
 
   @Update

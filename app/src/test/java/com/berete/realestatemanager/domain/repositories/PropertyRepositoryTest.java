@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 
+import static com.berete.realestatemanager.FakeData.fakeProperty;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.timeout;
@@ -20,23 +21,6 @@ public class PropertyRepositoryTest {
 
   private PropertyProvider propertyProvider;
   private PropertyRepository propertyRepository;
-  private final Photo fakePhoto = new Photo("url", "desc");
-  private final RealEstateAgent fakeAgent = new RealEstateAgent("name", "PhotoUrl");
-  private final Property.Address fakeAddress = new Property.Address("locality", "postalCode", "formattedAddr");
-  private final Property fakeProperty =
-      new Property(
-          Property.Type.HOUSE,
-          2.5,
-          54.56,
-          5,
-          "desc",
-          Collections.singletonList(fakePhoto),
-          fakeAddress,
-          Collections.singletonList(new Property.PointOrInterest("name")),
-          false,
-          464,
-          3254,
-          fakeAgent);
 
   @Before
   public void setUp() {

@@ -155,6 +155,7 @@ public class Property {
   // ----------------------   INNERS  ----------------------- //
 
   public static class PointOrInterest {
+    private int id;
     private final String name;
 
     public PointOrInterest(String name) {
@@ -163,6 +164,10 @@ public class Property {
 
     public String getName() {
       return name;
+    }
+
+    public int getId() {
+      return id;
     }
   }
 

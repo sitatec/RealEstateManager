@@ -23,6 +23,6 @@ public interface PhotoDao {
   void delete(PhotoEntity photo);
 
   @Insert
-  void create(PhotoEntity photo);
+  void create(PhotoEntity... photo);
 
 }
