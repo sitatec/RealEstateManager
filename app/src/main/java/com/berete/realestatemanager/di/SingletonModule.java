@@ -1,6 +1,5 @@
 package com.berete.realestatemanager.di;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.berete.realestatemanager.data_sources.local.Database;

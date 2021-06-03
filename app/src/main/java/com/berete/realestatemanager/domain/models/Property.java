@@ -1,8 +1,13 @@
 package com.berete.realestatemanager.domain.models;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 public class Property {
+
+  public static final DateTimeFormatter PROPERTY_RELATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
   private int id;
   private Type type;
@@ -14,9 +19,11 @@ public class Property {
   private Address address;
   private List<PointOrInterest> pointOfInterestNearby;
   private boolean isAvailable;
-  private long availableSince;
+  private long publicationDate;
   private long saleDate;
   private RealEstateAgent agent;
+
+  public Property(){}
 
   public Property(
       Type type,
@@ -28,7 +35,7 @@ public class Property {
       Address address,
       List<PointOrInterest> pointOfInterestNearby,
       boolean isAvailable,
-      long availableSince,
+      long publicationDate,
       long saleDate,
       RealEstateAgent agent) {
     this.type = type;
@@ -40,7 +47,7 @@ public class Property {
     this.address = address;
     this.pointOfInterestNearby = pointOfInterestNearby;
     this.isAvailable = isAvailable;
-    this.availableSince = availableSince;
+    this.publicationDate = publicationDate;
     this.saleDate = saleDate;
     this.agent = agent;
   }
@@ -119,20 +126,20 @@ public class Property {
     this.pointOfInterestNearby = (List<PointOrInterest>) pointOfInterestNearby;
   }
 
-  public boolean isAvailable() {
+  public boolean isSold() {
     return isAvailable;
   }
 
-  public void setAvailable(boolean available) {
+  public void setSold(boolean available) {
     isAvailable = available;
   }
 
-  public long getAvailableSince() {
-    return availableSince;
+  public long getPublicationDate() {
+    return publicationDate;
   }
 
-  public void setAvailableSince(long availableSince) {
-    this.availableSince = availableSince;
+  public void setPublicationDate(long availableSince) {
+    this.publicationDate = availableSince;
   }
 
   public long getSaleDate() {
@@ -172,9 +179,9 @@ public class Property {
   }
 
   public static class Address {
-    private final String locality;
-    private final String postalCode;
-    private final String formattedAddress;
+    private String locality;
+    private String postalCode;
+    private String formattedAddress;
 
     public Address(String locality, String postalCode, String formattedAddress) {
       this.locality = locality;
@@ -193,12 +200,28 @@ public class Property {
     public String getFormattedAddress() {
       return formattedAddress;
     }
+
+    public void setLocality(String locality) {
+      this.locality = locality;
+    }
+
+    public void setPostalCode(String postalCode) {
+      this.postalCode = postalCode;
+    }
+
+    public void setFormattedAddress(String formattedAddress) {
+      this.formattedAddress = formattedAddress;
+    }
   }
 
   public enum Type {
     APARTMENT,
     LOFT,
     MANOR,
-    HOUSE
+    HOUSE;
+
+    public String[] names(){
+      return Arrays.stream(values()).map(Enum::name).toArray(String[]::new);
+    }
   }
 }

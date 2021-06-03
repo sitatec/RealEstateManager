@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
     <string name="price_text">Price</string>
-    <string name="number_of_rooms_txt">Number of rooms</string>
-    <string name="surface_txt">Surface(U+33A1)</string>
+    <string name="number_of_rooms_txt">Number of rooms </string>
+    <string name="surface_txt">Surface (\u33A1) </string>
     <string name="description_txt">Description</string>
     <string name="sold_txt">Sold</string>
     <string name="publication_date_txt">Publication Date</string>
     <string name="sale_date_txt">Sale Date</string>
+    <string name="address_txt">Complete address</string>
+    <string name="locality_txt">Locality</string>
+    <string name="save_txt">Save</string>
 </resources>

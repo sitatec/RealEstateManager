@@ -3,7 +3,7 @@ package com.berete.realestatemanager.domain.models;
 public class RealEstateAgent {
 
   private int id;
-  private final String name;
+  private String name;
   private String photoUrl;
 
   public RealEstateAgent(String name, String photoUrl) {
@@ -25,5 +25,13 @@ public class RealEstateAgent {
 
   public String getPhotoUrl() {
     return photoUrl;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setPhotoUrl(String photoUrl) {
+    this.photoUrl = photoUrl;
   }
 }
