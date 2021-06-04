@@ -1,5 +1,7 @@
 package com.berete.realestatemanager.domain.repositories;
 
+import androidx.lifecycle.LiveData;
+
 import com.berete.realestatemanager.domain.data_providers.PropertyProvider;
 import com.berete.realestatemanager.domain.models.Property;
 
@@ -19,8 +21,8 @@ public class PropertyRepository {
     this.propertyProvider = propertyProvider;
   }
 
-  public void create(Property property) {
-    doInBackground.execute(() -> propertyProvider.create(property));
+  public LiveData<Integer> create(Property property) {
+    return propertyProvider.create(property);
   }
 
   public Property getById(int id){
@@ -39,4 +41,11 @@ public class PropertyRepository {
     doInBackground.execute(() -> propertyProvider.delete(property));
   }
 
+  public void addPointOfInterestToProperty(int propertyId, int pointOfInterestId){
+    propertyProvider.associateWithPointOfInterest(propertyId, pointOfInterestId);
+  }
+
+  public void removePointOfInterestFromProperty(int propertyId, int pointOfInterestId) {
+    propertyProvider.removePointOfInterestFromProperty(propertyId, pointOfInterestId);
+  }
 }

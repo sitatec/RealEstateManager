@@ -1,5 +1,6 @@
 package com.berete.realestatemanager.data_sources.local.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -27,6 +28,6 @@ public interface PropertyDao {
   void delete(PropertyEntity property);
 
   @Insert
-  void create(PropertyEntity property);
+  long create(PropertyEntity property);
 
 }

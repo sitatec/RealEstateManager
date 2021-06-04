@@ -5,6 +5,7 @@ public class Photo {
   private int id;
   private String url;
   private String description;
+  private int propertyId;
 
   public Photo(){}
 
@@ -35,5 +36,13 @@ public class Photo {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public int getPropertyId() {
+    return propertyId;
+  }
+
+  public void setPropertyId(int propertyId) {
+    this.propertyId = propertyId;
   }
 }

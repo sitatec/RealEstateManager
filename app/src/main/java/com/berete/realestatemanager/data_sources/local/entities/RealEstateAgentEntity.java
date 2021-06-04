@@ -16,6 +16,11 @@ public class RealEstateAgentEntity extends RealEstateAgent {
   @ColumnInfo(name = "agent_id")
   public int id;
 
+  public RealEstateAgentEntity(RealEstateAgent parent){
+    super(parent.getName(), parent.getPhotoUrl());
+    id = parent.getId();
+  }
+
   public RealEstateAgentEntity(String name, String photoUrl) {
     super(name, photoUrl);
   }

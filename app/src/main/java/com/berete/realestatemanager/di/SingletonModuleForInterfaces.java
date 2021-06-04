@@ -1,7 +1,14 @@
 package com.berete.realestatemanager.di;
 
-import com.berete.realestatemanager.data_sources.local.PropertyDataProvider;
+import com.berete.realestatemanager.data_sources.local.adapters.PhotoDataProvider;
+import com.berete.realestatemanager.data_sources.local.adapters.PointOfInterestDataProvider;
+import com.berete.realestatemanager.data_sources.local.adapters.PropertyDataProvider;
+import com.berete.realestatemanager.data_sources.local.adapters.RealEstateAgentDataProvider;
+import com.berete.realestatemanager.data_sources.local.dao.RealEstateAgentDao;
+import com.berete.realestatemanager.domain.data_providers.PhotoProvider;
+import com.berete.realestatemanager.domain.data_providers.PointOfInterestProvider;
 import com.berete.realestatemanager.domain.data_providers.PropertyProvider;
+import com.berete.realestatemanager.domain.data_providers.RealEstateAgentProvider;
 
 import javax.inject.Singleton;
 
@@ -18,4 +25,17 @@ public abstract class SingletonModuleForInterfaces {
   @Singleton
   public abstract PropertyProvider bindPropertyProvider(PropertyDataProvider propertyDataProvider);
 
+  @Binds
+  @Singleton
+  public abstract PhotoProvider bindPropertyPhotoProvider(PhotoDataProvider photoDataProvider);
+
+  @Binds
+  @Singleton
+  public abstract RealEstateAgentProvider bindAgentProvider(
+      RealEstateAgentDataProvider realEstateAgentDataProvider);
+
+  @Binds
+  @Singleton
+  public abstract PointOfInterestProvider bingPointOfInterestDataProvider(
+      PointOfInterestDataProvider pointOfInterestDataProvider);
 }

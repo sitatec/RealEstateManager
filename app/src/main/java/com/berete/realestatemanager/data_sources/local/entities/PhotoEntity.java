@@ -2,11 +2,21 @@ package com.berete.realestatemanager.data_sources.local.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.berete.realestatemanager.domain.models.Photo;
 
-@Entity(tableName = "photo_entity")
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(
+    tableName = "photo_entity",
+    foreignKeys =
+        @ForeignKey(
+            entity = PropertyEntity.class,
+            parentColumns = "property_id",
+            childColumns = "property_id",
+            onDelete = CASCADE))
 public class PhotoEntity extends Photo {
 
   @PrimaryKey(autoGenerate = true)
@@ -20,11 +30,12 @@ public class PhotoEntity extends Photo {
     super(url, description);
   }
 
-  public PhotoEntity(Photo parent){
+  public PhotoEntity(Photo parent) {
     super(parent.getUrl(), parent.getDescription());
+    id = parent.getId();
   }
 
-  public Photo toModel(){
+  public Photo toModel() {
     return this;
   }
 }

@@ -32,8 +32,6 @@ import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
@@ -43,7 +41,6 @@ public class EditPropertyActivity extends AppCompatActivity {
 
   private ActivityEditPropertyBinding binding;
   private EditPropertyViewModel viewModel;
-  private PhotoListAdapter photoListAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -113,11 +110,10 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void setupPhotoList() {
-    photoListAdapter = new PhotoListAdapter(new ArrayList<>());
+    PhotoListAdapter photoListAdapter = new PhotoListAdapter(viewModel.getPropertyPhotos());
     binding.photoRecyclerView.setAdapter(photoListAdapter);
     binding.photoRecyclerView.setLayoutManager(
         new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-    viewModel.getPropertyPhotos().observe(this, photoListAdapter::updateList);
   }
 
   private void showPointOfInterests() {
@@ -129,7 +125,7 @@ public class EditPropertyActivity extends AppCompatActivity {
               TextView pointOfInterestView;
               boolean isSelected;
               for (final PointOfInterest pointOfInterest : pointOrInterestList) {
-                isSelected = viewModel.containsPointOfInterest(pointOfInterest.getId());
+                isSelected = viewModel.containsPointOfInterest(pointOfInterest);
                 pointOfInterestView = getPointOfInterestView(isSelected);
                 pointOfInterestView.setText(pointOfInterest.getName());
                 pointOfInterestView.setTag(pointOfInterest.getId());
@@ -137,16 +133,18 @@ public class EditPropertyActivity extends AppCompatActivity {
             });
   }
 
-  private void createPointOfInterest(String pointOfInterest) {
-    if (pointOfInterest.length() < 3) return;
+  private void createPointOfInterest(String pointOfInterestName) {
+    if (pointOfInterestName.length() < 3) return;
+    final PointOfInterest pointOfInterest = new PointOfInterest(pointOfInterestName);
     viewModel
-        .createPointOfInterest(new PointOfInterest(pointOfInterest))
+        .createPointOfInterest(pointOfInterest)
         .observe(
             this,
             pointOfInterestId -> {
               final TextView pointOfInterestView = getPointOfInterestView(false);
-              pointOfInterestView.setText(pointOfInterest);
-              pointOfInterestView.setTag(pointOfInterestId);
+              pointOfInterest.setId(pointOfInterestId);
+              pointOfInterestView.setText(pointOfInterestName);
+              pointOfInterestView.setTag(pointOfInterest);
               binding.pointOfInterestsContainer.addView(pointOfInterestView);
               binding.addPointOfInterest.setVisibility(View.GONE);
             });
@@ -155,7 +153,7 @@ public class EditPropertyActivity extends AppCompatActivity {
   private TextView getPointOfInterestView(boolean isChecked) {
     final TextView pointOfInterestView = new CheckedTextView(this);
     setPointOfInterestState(isChecked, pointOfInterestView);
-    pointOfInterestView.setPadding(16, 8, 16, 8);
+    pointOfInterestView.setPadding(20, 5, 20, 8);
     pointOfInterestView.setMinWidth(100);
     pointOfInterestView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
     pointOfInterestView.setTextSize(17);
@@ -165,24 +163,25 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void togglePointOfInterestState(View pointOfInterestView) {
-    final int pointOfInterestId = (int) pointOfInterestView.getTag();
-    if (viewModel.containsPointOfInterest(pointOfInterestId)) {
+    final PointOfInterest pointOfInterest = (PointOfInterest) pointOfInterestView.getTag();
+    if (viewModel.containsPointOfInterest(pointOfInterest)) {
       setPointOfInterestState(false, (TextView) pointOfInterestView);
-      viewModel.removePointOrInterestFromCurrentProperty(pointOfInterestId);
+      viewModel.removePointOrInterestFromCurrentProperty(pointOfInterest);
     } else {
       setPointOfInterestState(true, (TextView) pointOfInterestView);
-      viewModel.addPointOfInterestToCurrentProperty(pointOfInterestId);
+      viewModel.addPointOfInterestToCurrentProperty(pointOfInterest);
     }
   }
 
   private void setPointOfInterestState(boolean isChecked, TextView pointOfInterestView) {
     if (isChecked) {
       pointOfInterestView.setBackgroundResource(R.drawable.checked_text_bg);
-      final Drawable checkedDrawable =
-          ResourcesCompat.getDrawable(getResources(), R.drawable.ic_check_24, null);
-      pointOfInterestView.setCompoundDrawables(null, null, checkedDrawable, null);
+      pointOfInterestView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+          0, 0, R.drawable.ic_check_24, 0);
     } else {
       pointOfInterestView.setBackgroundResource(R.drawable.unchecked_text_bg);
+      pointOfInterestView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+          0, 0, 0, 0);
     }
   }
 
@@ -221,7 +220,7 @@ public class EditPropertyActivity extends AppCompatActivity {
             R.string.set_txt,
             ((dialog, which) -> {
               photo.setDescription(photoDescLayout.photoDescription.getText().toString());
-              viewModel.createPhotoAndAddToCurrentProperty(photo);
+              viewModel.addPhotoToCurrentProperty(photo);
               Log.d("PHOTO_DESCRIPTION", "Desc : " + photo.getDescription());
             }))
         .create()

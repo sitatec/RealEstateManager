@@ -1,5 +1,6 @@
 package com.berete.realestatemanager.data_sources.local.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,17 +15,21 @@ import java.util.List;
 public interface PointOfInterestDao {
 
   @Query(
-      "SELECT * FROM point_of_interest "
+      "SELECT point_of_interest.* FROM point_of_interest "
           + "JOIN property_point_of_interest_association AS ppoi_assoc "
           + "ON ppoi_assoc.property_id = :property_id")
-  List<PointOfInterestEntity> getPointOfInterestByPropertyId(int property_id);
+  LiveData<List<PointOfInterestEntity>> getPointOfInterestByPropertyId(int property_id);
 
-  @Update
-  void update(PointOfInterestEntity pointOfInterest);
+  @Insert
+  long create(PointOfInterestEntity pointOfInterest);
+
+  @Query("SELECT * FROM point_of_interest")
+  LiveData<List<PointOfInterestEntity>> getAll();
 
   @Delete
   void delete(PointOfInterestEntity pointOfInterest);
 
-  @Insert
-  void create(PointOfInterestEntity pointOfInterest);
+  @Update
+  void update(PointOfInterestEntity pointOfInterest);
+
 }

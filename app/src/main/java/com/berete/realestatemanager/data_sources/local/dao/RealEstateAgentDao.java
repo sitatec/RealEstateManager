@@ -1,5 +1,6 @@
 package com.berete.realestatemanager.data_sources.local.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,6 +10,7 @@ import androidx.room.Update;
 
 import com.berete.realestatemanager.data_sources.local.entities.Relationships;
 import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
+import com.berete.realestatemanager.domain.models.RealEstateAgent;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ public interface RealEstateAgentDao {
 
   @Insert
   void create(RealEstateAgentEntity agent);
+
+  @Query("SELECT * FROM real_estate_agent")
+  LiveData<List<RealEstateAgentEntity>> getAll();
 
   @Transaction
   @Query("SELECT * FROM real_estate_agent")

@@ -3,6 +3,7 @@ package com.berete.realestatemanager.data_sources.local.entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.berete.realestatemanager.domain.models.Property;
@@ -19,7 +20,7 @@ public class PropertyEntity extends Property {
   @ColumnInfo(name = "agent_id")
   public int agentID;
 
-  @Embedded private Address address;
+  @Embedded public AddressEntity address;
 
   public PropertyEntity(
       Type type,
@@ -27,7 +28,7 @@ public class PropertyEntity extends Property {
       double surface,
       int numberOfRooms,
       String description,
-      Address address,
+      AddressEntity address,
       boolean isSold,
       long publicationDate,
       long saleDate) {
@@ -61,5 +62,15 @@ public class PropertyEntity extends Property {
         parent.getSaleDate(),
         parent.getAgent());
     id = parent.getId();
+  }
+
+  public static class AddressEntity extends Address {
+
+    @Ignore
+    public AddressEntity(){}
+
+    public AddressEntity(String locality, String postalCode, String formattedAddress){
+      super(locality, postalCode, formattedAddress);
+    }
   }
 }
