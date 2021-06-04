@@ -3,8 +3,10 @@ package com.berete.realestatemanager.domain.models;
 public class Photo {
 
   private int id;
-  private final String url;
-  private final String description;
+  private String url;
+  private String description;
+
+  public Photo(){}
 
   public Photo(String url, String description) {
     this.url = url;
@@ -27,4 +29,11 @@ public class Photo {
     return description;
   }
 
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

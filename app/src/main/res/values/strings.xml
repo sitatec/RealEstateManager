@@ -1,13 +1,23 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
-    <string name="price_text">Price</string>
+    <string name="price_text">Price (USD)</string>
     <string name="number_of_rooms_txt">Number of rooms </string>
     <string name="surface_txt">Surface (\u33A1) </string>
     <string name="description_txt">Description</string>
     <string name="sold_txt">Sold</string>
-    <string name="publication_date_txt">Publication Date</string>
-    <string name="sale_date_txt">Sale Date</string>
+    <string name="publication_date_txt">Publication Date (dd/mm/yy)</string>
+    <string name="sale_date_txt">Sale Date (dd/mm/yy)</string>
     <string name="address_txt">Complete address</string>
     <string name="locality_txt">Locality</string>
     <string name="save_txt">Save</string>
+    <string name="property_successfully_saved_msg">Property successfully saved!</string>
+    <string name="update_property_txt">Update property</string>
+    <string name="create_property_txt">Create property</string>
+    <string name="select_agent_txt">Select Agent</string>
+    <string name="point_of_interests_nearby_txt">Point of interests nearby</string>
+    <string name="photos_txt">Photos</string>
+    <string name="property_type_txt">Property type</string>
+    <string name="add_txt">Add</string>
+    <string name="set_txt">Set</string>
+    <string name="photo_desc_dialog_title">Add photo description</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.berete.realestatemanager.domain.models;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -10,15 +9,15 @@ public class Property {
   public static final DateTimeFormatter PROPERTY_RELATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
   private int id;
-  private Type type;
+  private Type type = Type.APARTMENT;
   private double price;
   private double surface;
   private int numberOfRooms;
   private String description;
   private List<Photo> photoList;
   private Address address;
-  private List<PointOrInterest> pointOfInterestNearby;
-  private boolean isAvailable;
+  private List<PointOfInterest> pointOfInterestNearby;
+  private boolean isSold;
   private long publicationDate;
   private long saleDate;
   private RealEstateAgent agent;
@@ -33,8 +32,8 @@ public class Property {
       String description,
       List<Photo> photoList,
       Address address,
-      List<PointOrInterest> pointOfInterestNearby,
-      boolean isAvailable,
+      List<PointOfInterest> pointOfInterestNearby,
+      boolean isSold,
       long publicationDate,
       long saleDate,
       RealEstateAgent agent) {
@@ -46,7 +45,7 @@ public class Property {
     this.photoList = photoList;
     this.address = address;
     this.pointOfInterestNearby = pointOfInterestNearby;
-    this.isAvailable = isAvailable;
+    this.isSold = isSold;
     this.publicationDate = publicationDate;
     this.saleDate = saleDate;
     this.agent = agent;
@@ -117,21 +116,21 @@ public class Property {
     this.address = address;
   }
 
-  public List<PointOrInterest> getPointOfInterestNearby() {
+  public List<PointOfInterest> getPointOfInterestNearby() {
     return  pointOfInterestNearby;
   }
 
   @SuppressWarnings("unchecked")
-  public void setPointOfInterestNearby(List<? extends PointOrInterest> pointOfInterestNearby) {
-    this.pointOfInterestNearby = (List<PointOrInterest>) pointOfInterestNearby;
+  public void setPointOfInterestNearby(List<? extends PointOfInterest> pointOfInterestNearby) {
+    this.pointOfInterestNearby = (List<PointOfInterest>) pointOfInterestNearby;
   }
 
   public boolean isSold() {
-    return isAvailable;
+    return isSold;
   }
 
-  public void setSold(boolean available) {
-    isAvailable = available;
+  public void setSold(boolean sold) {
+    isSold = sold;
   }
 
   public long getPublicationDate() {
@@ -161,11 +160,11 @@ public class Property {
 
   // ----------------------   INNERS  ----------------------- //
 
-  public static class PointOrInterest {
+  public static class PointOfInterest {
     private int id;
     private final String name;
 
-    public PointOrInterest(String name) {
+    public PointOfInterest(String name) {
       this.name = name;
     }
 
@@ -182,6 +181,8 @@ public class Property {
     private String locality;
     private String postalCode;
     private String formattedAddress;
+
+    public Address(){}
 
     public Address(String locality, String postalCode, String formattedAddress) {
       this.locality = locality;
@@ -220,7 +221,7 @@ public class Property {
     MANOR,
     HOUSE;
 
-    public String[] names(){
+    public static String[] names(){
       return Arrays.stream(values()).map(Enum::name).toArray(String[]::new);
     }
   }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="@dimen/photo_size"
+        android:layout_height="@dimen/photo_size" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="@dimen/photo_size"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:background="#7F000000"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingHorizontal="2dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/white"
+        tools:text="Fake description for the photo" />
+
+</FrameLayout>

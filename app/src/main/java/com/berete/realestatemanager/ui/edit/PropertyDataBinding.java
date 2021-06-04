@@ -3,6 +3,7 @@ package com.berete.realestatemanager.ui.edit;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import com.berete.realestatemanager.BR;
 import com.berete.realestatemanager.domain.models.Property;
 
 import java.time.LocalDate;
@@ -12,48 +13,87 @@ import static com.berete.realestatemanager.domain.models.Property.PROPERTY_RELAT
 public class PropertyDataBinding extends BaseObservable {
 
   private final Property property;
+  private String saleDate = "";
+  private String publicationDate = "";
+  private int selectedAgentPosition;
 
   public PropertyDataBinding(Property property) {
     this.property = property;
+    if (property.getPublicationDate() != 0){
+      publicationDate = LocalDate.ofEpochDay(property.getPublicationDate()).format(PROPERTY_RELATED_DATE_FORMATTER);
+    }
+    if (property.getSaleDate() != 0){
+      saleDate = LocalDate.ofEpochDay(property.getSaleDate()).format(PROPERTY_RELATED_DATE_FORMATTER);
+    }
   }
 
   public Property getProperty() {
+    property.setPublicationDate(
+        LocalDate.parse(publicationDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
+    property.setSaleDate(
+        LocalDate.parse(saleDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
     return property;
   }
 
   @Bindable
-  public String getType() {
-    return property.getType().name();
+  public int getSelectedTypePosition(){
+    return property.getType().ordinal();
   }
 
-  public void setType(String type) {
-    property.setType(Property.Type.valueOf(type));
+  public void setSelectedTypePosition(int position){
+    property.setType(Property.Type.values()[position]);
+//    notifyPropertyChanged(BR.selectedItemPosition);
+  }
+
+  @Bindable
+  public int getSelectedAgentPosition(){
+    return selectedAgentPosition;
+  }
+
+  public void setSelectedAgentPosition(int position){
+    selectedAgentPosition = position;
+//    notifyPropertyChanged(BR.position);
   }
 
   @Bindable
   public String getPrice() {
+    if(property.getPrice() == 0) return "";
     return Double.toString(property.getPrice());
   }
 
   public void setPrice(String price) {
+    if(price.isEmpty()) {
+      property.setPrice(0);
+      return;
+    }
     property.setPrice(Double.parseDouble(price));
   }
 
   @Bindable
   public String getSurface() {
+    if(property.getSurface() == 0) return "";
     return String.valueOf(property.getSurface());
   }
 
   public void setSurface(String surface) {
+    if(surface.isEmpty()) {
+      property.setSurface(0);
+      return;
+    }
     property.setSurface(Double.parseDouble(surface));
   }
 
   @Bindable
   public String getNumberOfRooms() {
+    if(property.getNumberOfRooms() == 0) return "";
     return String.valueOf(property.getNumberOfRooms());
   }
 
   public void setNumberOfRooms(String numberOfRooms) {
+    if(numberOfRooms.isEmpty()) {
+      property.setNumberOfRooms(0);
+      return;
+    }
     property.setNumberOfRooms(Integer.parseInt(numberOfRooms));
   }
 
@@ -104,42 +144,41 @@ public class PropertyDataBinding extends BaseObservable {
   //  }
 
   @Bindable
-  public boolean isSold() {
+  public Boolean getSold() {
     return property.isSold();
   }
 
-  public void setSold(boolean available) {
-    property.setSold(available);
+  public void setSold(Boolean sold) {
+    if(property.isSold() != sold){
+      property.setSold(sold);
+      notifyPropertyChanged(BR.sold);
+    }
   }
 
   @Bindable
   public String getFormattedPublicationDate() {
-    final LocalDate publicationDate = LocalDate.ofEpochDay(property.getPublicationDate());
-    return publicationDate.format(PROPERTY_RELATED_DATE_FORMATTER);
+    return publicationDate;
   }
 
   public void setFormattedPublicationDate(String date) {
-    property.setPublicationDate(
-        LocalDate.parse(date, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
+    this.publicationDate = date;
   }
 
   @Bindable
-  public String getSaleDate() {
-    final LocalDate publicationDate = LocalDate.ofEpochDay(property.getSaleDate());
-    return publicationDate.format(PROPERTY_RELATED_DATE_FORMATTER);
+  public String getFormattedSaleDate() {
+    return saleDate;
   }
 
-  public void setSaleDate(String saleDate) {
-    property.setPublicationDate(
-        LocalDate.parse(saleDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
+  public void setFormattedSaleDate(String saleDate) {
+    this.saleDate = saleDate;
   }
 
-  @Bindable
-  public String getAgentName() {
-    return property.getAgent().getName();
-  }
-
-  public void setAgentName(String agentName) {
-    property.getAgent().setName(agentName);
-  }
+//  @Bindable
+//  public String getAgentName() {
+//    return property.getAgent().getName();
+//  }
+//
+//  public void setAgentName(String agentName) {
+//    property.getAgent().setName(agentName);
+//  }
 }

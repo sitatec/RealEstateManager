@@ -28,8 +28,8 @@ public class PropertyEntity extends Property {
       int numberOfRooms,
       String description,
       Address address,
-      boolean isAvailable,
-      long availableSince,
+      boolean isSold,
+      long publicationDate,
       long saleDate) {
     super(
         type,
@@ -40,8 +40,8 @@ public class PropertyEntity extends Property {
         null,
         address,
         null,
-        isAvailable,
-        availableSince,
+        isSold,
+        publicationDate,
         saleDate,
         null);
   }

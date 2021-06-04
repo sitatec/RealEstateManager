@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RealEstateManager">
-        <activity android:name=".ui.edit.EditPropertyActivity" />
+        <activity
+            android:name=".ui.edit.EditPropertyActivity"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

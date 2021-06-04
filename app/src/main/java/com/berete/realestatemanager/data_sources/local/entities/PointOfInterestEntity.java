@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import com.berete.realestatemanager.domain.models.Property;
 
 @Entity(tableName = "point_of_interest")
-public class PointOfInterestEntity extends Property.PointOrInterest {
+public class PointOfInterestEntity extends Property.PointOfInterest {
 
   @ColumnInfo(name = "point_of_interest_id")
   @PrimaryKey(autoGenerate = true)
