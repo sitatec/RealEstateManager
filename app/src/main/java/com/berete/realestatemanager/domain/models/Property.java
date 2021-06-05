@@ -15,6 +15,7 @@ public class Property {
   private int numberOfRooms;
   private String description;
   private List<Photo> photoList;
+  private String mainPhotoUrl = "";
   private Address address;
   private List<PointOfInterest> pointOfInterestNearby;
   private boolean isSold;
@@ -125,6 +126,14 @@ public class Property {
     this.pointOfInterestNearby = (List<PointOfInterest>) pointOfInterestNearby;
   }
 
+  public String getMainPhotoUrl() {
+    return mainPhotoUrl;
+  }
+
+  public void setMainPhotoUrl(String  mainPhotoUrl) {
+    this.mainPhotoUrl = mainPhotoUrl;
+  }
+
   public boolean isSold() {
     return isSold;
   }
@@ -223,6 +232,7 @@ public class Property {
     APARTMENT,
     LOFT,
     MANOR,
+    PENTHOUSE,
     HOUSE;
 
     public static String[] names(){

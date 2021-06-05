@@ -20,4 +20,9 @@
     <string name="add_txt">Add</string>
     <string name="set_txt">Set</string>
     <string name="photo_desc_dialog_title">Add photo description</string>
+    <string name="set_as_main">Set as main</string>
+    <string name="photo_required_msg">At least one photo must be set.</string>
+    <string name="media">Media</string>
+    <string name="surface">Surface</string>
+    <string name="type">Type</string>
 </resources>

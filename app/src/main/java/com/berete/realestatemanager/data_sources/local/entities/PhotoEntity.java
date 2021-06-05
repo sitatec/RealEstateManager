@@ -32,7 +32,10 @@ public class PhotoEntity extends Photo {
 
   public PhotoEntity(Photo parent) {
     super(parent.getUrl(), parent.getDescription());
-    id = parent.getId();
+    if(parent.getId() != 0){
+      id = parent.getId();
+    }
+    propertyId = parent.getPropertyId();
   }
 
   public Photo toModel() {

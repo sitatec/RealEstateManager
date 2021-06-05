@@ -30,17 +30,16 @@ public class EditPropertyViewModel extends ViewModel {
       new RealEstateAgent("Select Agent", "file:///android_asset/person.png");
 
   // DATA_SOURCES
-  protected final PropertyRepository propertyRepository;
-  protected final PhotoRepository photoRepository;
-  protected final PointOfInterestRepository pointOfInterestRepository;
+  private final PropertyRepository propertyRepository;
+  private final PhotoRepository photoRepository;
+  private final PointOfInterestRepository pointOfInterestRepository;
 
-  protected final MutableLiveData<PropertyDataBinding> propertyToBeUpdated =
-      new MutableLiveData<>();
-  protected final Executor doInBackground = Executors.newSingleThreadExecutor();
-  protected Property currentProperty;
+  private final MutableLiveData<PropertyDataBinding> propertyToBeUpdated = new MutableLiveData<>();
+  private final Executor doInBackground = Executors.newSingleThreadExecutor();
+  private Property currentProperty;
 
-  protected LiveData<List<PointOfInterest>> allPointOfInterest;
-  protected List<PointOfInterest> currentPropertyPointOfInterest;
+  private LiveData<List<PointOfInterest>> allPointOfInterest;
+  private List<PointOfInterest> currentPropertyPointOfInterest;
 
   @Inject
   public EditPropertyViewModel(
@@ -71,6 +70,9 @@ public class EditPropertyViewModel extends ViewModel {
 
   public void persist() {
     // TODO REFACTORING
+    if(currentProperty.getMainPhotoUrl().isEmpty()){
+      currentProperty.setMainPhotoUrl(currentProperty.getPhotoList().get(0).getUrl());
+    }
     final LiveData<Integer> livePropertyId = propertyRepository.create(currentProperty);
 
     livePropertyId.observeForever(
@@ -86,7 +88,7 @@ public class EditPropertyViewModel extends ViewModel {
                     public void onChanged(Integer pointOfInterestId) {
                       propertyRepository.addPointOfInterestToProperty(
                           propertyId, pointOfInterestId);
-                      livePointOfInterestId.observeForever(this);
+                      livePointOfInterestId.removeObserver(this);
                     }
                   });
             }
@@ -145,5 +147,13 @@ public class EditPropertyViewModel extends ViewModel {
 
   public List<Photo> getPropertyPhotos() {
     return currentProperty.getPhotoList();
+  }
+
+  public void setMainPhoto(Photo photo) {
+    currentProperty.setMainPhotoUrl(photo.getUrl());
+  }
+
+  public boolean isPhotoDefined(){
+    return !currentProperty.getPhotoList().isEmpty();
   }
 }

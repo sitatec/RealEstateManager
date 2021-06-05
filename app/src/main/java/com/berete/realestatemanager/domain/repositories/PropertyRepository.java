@@ -17,7 +17,7 @@ public class PropertyRepository {
   private final Executor doInBackground = Executors.newFixedThreadPool(2);
 
   @Inject
-  public PropertyRepository(PropertyProvider propertyProvider){
+  public PropertyRepository(PropertyProvider propertyProvider) {
     this.propertyProvider = propertyProvider;
   }
 
@@ -25,11 +25,11 @@ public class PropertyRepository {
     return propertyProvider.create(property);
   }
 
-  public Property getById(int id){
+  public Property getById(int id) {
     return propertyProvider.getById(id);
   }
 
-  public List<Property> getAll(){
+  public LiveData<List<Property>> getAll() {
     return propertyProvider.getAll();
   }
 
@@ -41,11 +41,13 @@ public class PropertyRepository {
     doInBackground.execute(() -> propertyProvider.delete(property));
   }
 
-  public void addPointOfInterestToProperty(int propertyId, int pointOfInterestId){
-    propertyProvider.associateWithPointOfInterest(propertyId, pointOfInterestId);
+  public void addPointOfInterestToProperty(int propertyId, int pointOfInterestId) {
+    doInBackground.execute(
+        () -> propertyProvider.associateWithPointOfInterest(propertyId, pointOfInterestId));
   }
 
   public void removePointOfInterestFromProperty(int propertyId, int pointOfInterestId) {
-    propertyProvider.removePointOfInterestFromProperty(propertyId, pointOfInterestId);
+    doInBackground.execute(
+        () -> propertyProvider.removePointOfInterestFromProperty(propertyId, pointOfInterestId));
   }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PropertyProvider {
   Property getById(int id);
-  List<Property> getAll();
+  LiveData<List<Property>> getAll();
   void update(Property property);
   void delete(Property property);
   LiveData<Integer> create(Property property);

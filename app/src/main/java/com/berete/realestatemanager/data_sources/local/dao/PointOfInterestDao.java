@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface PointOfInterestDao {
           + "ON ppoi_assoc.property_id = :property_id")
   LiveData<List<PointOfInterestEntity>> getPointOfInterestByPropertyId(int property_id);
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   long create(PointOfInterestEntity pointOfInterest);
 
   @Query("SELECT * FROM point_of_interest")

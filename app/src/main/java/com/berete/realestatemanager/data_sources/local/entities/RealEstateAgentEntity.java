@@ -18,7 +18,9 @@ public class RealEstateAgentEntity extends RealEstateAgent {
 
   public RealEstateAgentEntity(RealEstateAgent parent){
     super(parent.getName(), parent.getPhotoUrl());
-    id = parent.getId();
+    if(parent.getId() != 0){
+      id = parent.getId();
+    }
   }
 
   public RealEstateAgentEntity(String name, String photoUrl) {

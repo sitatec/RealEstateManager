@@ -2,6 +2,7 @@ package com.berete.realestatemanager.data_sources.local.adapters;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.util.StringUtil;
 
 import com.berete.realestatemanager.data_sources.local.dao.PhotoDao;
 import com.berete.realestatemanager.data_sources.local.dao.PointOfInterestDao;
@@ -16,6 +17,7 @@ import com.berete.realestatemanager.domain.models.Property;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class PropertyDataProvider implements PropertyProvider {
@@ -25,6 +27,10 @@ public class PropertyDataProvider implements PropertyProvider {
   private final PhotoDao photoDao;
   private final PointOfInterestDao pointOfInterestDao;
   private final PropertyPointOfInterestCrossRefDao propertyPointOfInterestCrossRefDao;
+
+  private final Executor doInBackground = Executors.newSingleThreadExecutor();
+
+  private MutableLiveData<List<Property>> allProperties;
 
   public PropertyDataProvider(
       RealEstateAgentDao realEstateAgentDao,
@@ -58,16 +64,22 @@ public class PropertyDataProvider implements PropertyProvider {
   }
 
   @Override
-  public List<Property> getAll() {
-    final List<RealEstateAgentWithProperties> realEstateAgentWithProperties =
-        realEstateAgentDao.getAllAgentWithProperties();
-    final List<Property> properties = new ArrayList<>();
+  public LiveData<List<Property>> getAll() {
+    if (allProperties == null) {
+      allProperties = new MutableLiveData<>();
+      doInBackground.execute(
+          () -> {
+            final List<RealEstateAgentWithProperties> realEstateAgentWithProperties =
+                realEstateAgentDao.getAllAgentWithProperties();
+            final List<Property> properties = new ArrayList<>();
 
-    for (RealEstateAgentWithProperties entry : realEstateAgentWithProperties) {
-      properties.addAll(entry.toProperties());
+            for (RealEstateAgentWithProperties entry : realEstateAgentWithProperties) {
+              properties.addAll(entry.toProperties());
+            }
+            allProperties.postValue(properties);
+          });
     }
-
-    return properties;
+    return allProperties;
   }
 
   @Override
@@ -84,7 +96,14 @@ public class PropertyDataProvider implements PropertyProvider {
   public LiveData<Integer> create(Property property) {
     final MutableLiveData<Integer> liveId = new MutableLiveData<>();
     Executors.newSingleThreadExecutor()
-        .execute(() -> liveId.postValue((int) propertyDao.create(new PropertyEntity(property))));
+        .execute(
+            () -> {
+              final int id = (int) propertyDao.create(new PropertyEntity(property));
+              liveId.postValue(id);
+              property.setId(id);
+              allProperties.getValue().add(property);
+              //              allProperties.postValue();
+            });
     return liveId;
   }
 

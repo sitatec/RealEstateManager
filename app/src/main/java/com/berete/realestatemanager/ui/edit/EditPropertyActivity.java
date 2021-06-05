@@ -3,6 +3,7 @@ package com.berete.realestatemanager.ui.edit;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.berete.realestatemanager.R;
@@ -41,6 +42,7 @@ public class EditPropertyActivity extends AppCompatActivity {
 
   private ActivityEditPropertyBinding binding;
   private EditPropertyViewModel viewModel;
+  private PhotoListAdapter photoListAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +71,18 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void saveProperty() {
-    viewModel.persist();
-    Snackbar.make(
-            binding.getRoot(),
-            getString(R.string.property_successfully_saved_msg),
-            Snackbar.LENGTH_SHORT)
-        .show();
+    if (viewModel.isPhotoDefined()) {
+      viewModel.persist();
+      Snackbar.make(
+              binding.getRoot(),
+              getString(R.string.property_successfully_saved_msg),
+              Snackbar.LENGTH_SHORT)
+          .show();
+    } else {
+      Snackbar.make(
+              binding.getRoot(), getString(R.string.photo_required_msg), Snackbar.LENGTH_SHORT)
+          .show();
+    }
   }
 
   private void setEditMode() {
@@ -110,7 +118,7 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void setupPhotoList() {
-    PhotoListAdapter photoListAdapter = new PhotoListAdapter(viewModel.getPropertyPhotos());
+    photoListAdapter = new PhotoListAdapter(viewModel.getPropertyPhotos());
     binding.photoRecyclerView.setAdapter(photoListAdapter);
     binding.photoRecyclerView.setLayoutManager(
         new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -129,6 +137,7 @@ public class EditPropertyActivity extends AppCompatActivity {
                 pointOfInterestView = getPointOfInterestView(isSelected);
                 pointOfInterestView.setText(pointOfInterest.getName());
                 pointOfInterestView.setTag(pointOfInterest.getId());
+                binding.pointOfInterestsContainer.addView(pointOfInterestView);
               }
             });
   }
@@ -180,8 +189,7 @@ public class EditPropertyActivity extends AppCompatActivity {
           0, 0, R.drawable.ic_check_24, 0);
     } else {
       pointOfInterestView.setBackgroundResource(R.drawable.unchecked_text_bg);
-      pointOfInterestView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-          0, 0, 0, 0);
+      pointOfInterestView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
     }
   }
 
@@ -220,8 +228,11 @@ public class EditPropertyActivity extends AppCompatActivity {
             R.string.set_txt,
             ((dialog, which) -> {
               photo.setDescription(photoDescLayout.photoDescription.getText().toString());
+              if (photoDescLayout.mainCheckBox.isChecked()) {
+                viewModel.setMainPhoto(photo);
+              }
               viewModel.addPhotoToCurrentProperty(photo);
-              Log.d("PHOTO_DESCRIPTION", "Desc : " + photo.getDescription());
+              photoListAdapter.updateList(viewModel.getPropertyPhotos());
             }))
         .create()
         .show();
