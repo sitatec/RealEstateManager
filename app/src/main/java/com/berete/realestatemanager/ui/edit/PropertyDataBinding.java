@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.berete.realestatemanager.BR;
+import com.berete.realestatemanager.Utils;
 import com.berete.realestatemanager.domain.models.Property;
 
 import java.time.LocalDate;
@@ -20,18 +21,21 @@ public class PropertyDataBinding extends BaseObservable {
   public PropertyDataBinding(Property property) {
     this.property = property;
     if (property.getPublicationDate() != 0){
-      publicationDate = LocalDate.ofEpochDay(property.getPublicationDate()).format(PROPERTY_RELATED_DATE_FORMATTER);
+      publicationDate = getFormattedPublicationDate();
+    }else {
+      publicationDate = Utils.getTodayDate();
     }
     if (property.getSaleDate() != 0){
-      saleDate = LocalDate.ofEpochDay(property.getSaleDate()).format(PROPERTY_RELATED_DATE_FORMATTER);
+      saleDate = getFormattedSaleDate();
     }
   }
 
   public Property getProperty() {
     property.setPublicationDate(
         LocalDate.parse(publicationDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
-    property.setSaleDate(
-        LocalDate.parse(saleDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
+    if (property.isSold()){
+      property.setSaleDate(LocalDate.parse(saleDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
+    }
     return property;
   }
 

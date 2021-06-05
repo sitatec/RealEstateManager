@@ -91,7 +91,7 @@ public class EditPropertyActivity extends AppCompatActivity {
       viewModel.updateProperty(propertyId).observe(this, binding::setProperty);
       binding.toolbar.setTitle(R.string.update_property_txt);
     } else {
-      binding.setProperty(viewModel.createNewProperty());
+      viewModel.createNewProperty().observe(this, binding::setProperty);
       binding.toolbar.setTitle(R.string.create_property_txt);
     }
   }
@@ -113,8 +113,11 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void setupAgentSelector() {
-    final AgentSpinnerAdapter adapter = new AgentSpinnerAdapter(this, viewModel.getAllAgents());
-    binding.agentSelector.setAdapter(adapter);
+    viewModel.getAllAgents().observe(this, agentList -> {
+      agentList.add(0, EditPropertyViewModel.AGENT_PLACEHOLDER);
+      final AgentSpinnerAdapter adapter = new AgentSpinnerAdapter(this, agentList);
+      binding.agentSelector.setAdapter(adapter);
+    });
   }
 
   private void setupPhotoList() {
@@ -136,7 +139,7 @@ public class EditPropertyActivity extends AppCompatActivity {
                 isSelected = viewModel.containsPointOfInterest(pointOfInterest);
                 pointOfInterestView = getPointOfInterestView(isSelected);
                 pointOfInterestView.setText(pointOfInterest.getName());
-                pointOfInterestView.setTag(pointOfInterest.getId());
+                pointOfInterestView.setTag(pointOfInterest);
                 binding.pointOfInterestsContainer.addView(pointOfInterestView);
               }
             });
@@ -150,6 +153,7 @@ public class EditPropertyActivity extends AppCompatActivity {
         .observe(
             this,
             pointOfInterestId -> {
+              if(pointOfInterestId == null || pointOfInterestId.equals(0)) return;
               final TextView pointOfInterestView = getPointOfInterestView(false);
               pointOfInterest.setId(pointOfInterestId);
               pointOfInterestView.setText(pointOfInterestName);

@@ -1,12 +1,14 @@
 package com.berete.realestatemanager.domain.models;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
 public class Property {
 
-  public static final DateTimeFormatter PROPERTY_RELATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+  public static final DateTimeFormatter PROPERTY_RELATED_DATE_FORMATTER =
+      DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
   private int id;
   private Type type = Type.APARTMENT;
@@ -23,7 +25,7 @@ public class Property {
   private long saleDate;
   private RealEstateAgent agent;
 
-  public Property(){}
+  public Property() {}
 
   public Property(
       Type type,
@@ -118,7 +120,7 @@ public class Property {
   }
 
   public List<PointOfInterest> getPointOfInterestNearby() {
-    return  pointOfInterestNearby;
+    return pointOfInterestNearby;
   }
 
   @SuppressWarnings("unchecked")
@@ -130,7 +132,7 @@ public class Property {
     return mainPhotoUrl;
   }
 
-  public void setMainPhotoUrl(String  mainPhotoUrl) {
+  public void setMainPhotoUrl(String mainPhotoUrl) {
     this.mainPhotoUrl = mainPhotoUrl;
   }
 
@@ -150,12 +152,20 @@ public class Property {
     this.publicationDate = availableSince;
   }
 
+  public String getFormattedPubDate() {
+    return LocalDate.ofEpochDay(getPublicationDate()).format(PROPERTY_RELATED_DATE_FORMATTER);
+  }
+
   public long getSaleDate() {
     return saleDate;
   }
 
   public void setSaleDate(long saleDate) {
     this.saleDate = saleDate;
+  }
+
+  public String getFormattedSaleDate() {
+    return LocalDate.ofEpochDay(getSaleDate()).format(PROPERTY_RELATED_DATE_FORMATTER);
   }
 
   public RealEstateAgent getAgent() {
@@ -165,7 +175,6 @@ public class Property {
   public void setAgent(RealEstateAgent agent) {
     this.agent = agent;
   }
-
 
   // ----------------------   INNERS  ----------------------- //
 
@@ -188,6 +197,11 @@ public class Property {
     public void setId(int id) {
       this.id = id;
     }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
   public static class Address {
@@ -195,7 +209,7 @@ public class Property {
     private String postalCode;
     private String formattedAddress;
 
-    public Address(){}
+    public Address() {}
 
     public Address(String locality, String postalCode, String formattedAddress) {
       this.locality = locality;
@@ -235,7 +249,7 @@ public class Property {
     PENTHOUSE,
     HOUSE;
 
-    public static String[] names(){
+    public static String[] names() {
       return Arrays.stream(values()).map(Enum::name).toArray(String[]::new);
     }
   }

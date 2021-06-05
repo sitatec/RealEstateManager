@@ -25,6 +25,6 @@ public class RealEstateAgentDataProvider implements RealEstateAgentProvider {
   }
 
   private List<RealEstateAgent> toModels(List<RealEstateAgentEntity> entities){
-    return entities.stream().map(RealEstateAgentEntity::new).collect(Collectors.toList());
+    return entities.stream().map(RealEstateAgentEntity::toModel).collect(Collectors.toList());
   }
 }

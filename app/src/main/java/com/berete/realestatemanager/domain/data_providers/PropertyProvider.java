@@ -7,7 +7,7 @@ import com.berete.realestatemanager.domain.models.Property;
 import java.util.List;
 
 public interface PropertyProvider {
-  Property getById(int id);
+  LiveData<Property> getById(int id);
   LiveData<List<Property>> getAll();
   void update(Property property);
   void delete(Property property);

@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.ui;
+package com.berete.realestatemanager.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.berete.realestatemanager.R;
+import com.berete.realestatemanager.ui.detail.DetailActivity;
 import com.berete.realestatemanager.ui.edit.EditPropertyActivity;
 
 import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
+
+import static com.berete.realestatemanager.ui.detail.DetailActivity.PROPERTY_ID_ARG_KEY;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -34,8 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void setupPropertyList() {
     final RecyclerView recyclerView = findViewById(R.id.recyclerView);
-    final PropertyListAdapter adapter = new PropertyListAdapter(new ArrayList<>());
+    final PropertyListAdapter adapter = new PropertyListAdapter(new ArrayList<>(), this::startDetailActivity);
     recyclerView.setAdapter(adapter);
     viewModel.getProperties().observe(this, adapter::updateList);
+  }
+
+  private void startDetailActivity(int propertyId){
+    final Bundle bundle = new Bundle();
+    bundle.putInt(PROPERTY_ID_ARG_KEY, propertyId);
+    final Intent startDetailIntent = new Intent(this, DetailActivity.class);
+    startDetailIntent.putExtras(bundle);
+    startActivity(startDetailIntent);
   }
 }

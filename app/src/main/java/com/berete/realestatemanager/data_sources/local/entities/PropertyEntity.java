@@ -23,6 +23,7 @@ public class PropertyEntity extends Property {
   @Embedded public AddressEntity address;
 
   public PropertyEntity(
+      int id,
       Type type,
       double price,
       double surface,
@@ -31,7 +32,8 @@ public class PropertyEntity extends Property {
       AddressEntity address,
       boolean isSold,
       long publicationDate,
-      long saleDate) {
+      long saleDate,
+      String mainPhotoUrl) {
     super(
         type,
         price,
@@ -45,6 +47,8 @@ public class PropertyEntity extends Property {
         publicationDate,
         saleDate,
         null);
+    setMainPhotoUrl(mainPhotoUrl);
+    setId(id);
   }
 
   public PropertyEntity(Property parent) {
@@ -62,6 +66,8 @@ public class PropertyEntity extends Property {
         parent.getSaleDate(),
         parent.getAgent());
     id = parent.getId();
+    agentID = parent.getAgent().getId();
+    setMainPhotoUrl(parent.getMainPhotoUrl());
   }
 
   public static class AddressEntity extends Address {

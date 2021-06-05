@@ -25,4 +25,9 @@
     <string name="media">Media</string>
     <string name="surface">Surface</string>
     <string name="type">Type</string>
+    <string name="price">Price</string>
+    <string name="location">Location</string>
+    <string name="point_of_interest_nearby">Point of interest nearby</string>
+    <string name="agent">Agent</string>
+    <string name="details_txt">Details</string>
 </resources>

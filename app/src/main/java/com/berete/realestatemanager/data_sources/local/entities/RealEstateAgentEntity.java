@@ -16,11 +16,17 @@ public class RealEstateAgentEntity extends RealEstateAgent {
   @ColumnInfo(name = "agent_id")
   public int id;
 
-  public RealEstateAgentEntity(RealEstateAgent parent){
-    super(parent.getName(), parent.getPhotoUrl());
-    if(parent.getId() != 0){
-      id = parent.getId();
-    }
+//  public RealEstateAgentEntity(RealEstateAgent parent){
+//    super(parent.getName(), parent.getPhotoUrl());
+//    if(parent.getId() != 0){
+//      id = parent.getId();
+//    }
+//  }
+
+  public RealEstateAgent toModel(){
+    final RealEstateAgent model = new RealEstateAgent(getName(), getPhotoUrl());
+    model.setId(id);
+    return model;
   }
 
   public RealEstateAgentEntity(String name, String photoUrl) {

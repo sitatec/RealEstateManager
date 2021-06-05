@@ -1,5 +1,7 @@
 package com.berete.realestatemanager.ui.edit;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -9,6 +11,7 @@ import com.berete.realestatemanager.domain.models.Photo;
 import com.berete.realestatemanager.domain.models.Property;
 import com.berete.realestatemanager.domain.models.Property.PointOfInterest;
 import com.berete.realestatemanager.domain.models.RealEstateAgent;
+import com.berete.realestatemanager.domain.repositories.AgentRepository;
 import com.berete.realestatemanager.domain.repositories.PhotoRepository;
 import com.berete.realestatemanager.domain.repositories.PointOfInterestRepository;
 import com.berete.realestatemanager.domain.repositories.PropertyRepository;
@@ -33,44 +36,63 @@ public class EditPropertyViewModel extends ViewModel {
   private final PropertyRepository propertyRepository;
   private final PhotoRepository photoRepository;
   private final PointOfInterestRepository pointOfInterestRepository;
+  private final AgentRepository agentRepository;
 
-  private final MutableLiveData<PropertyDataBinding> propertyToBeUpdated = new MutableLiveData<>();
+  private final MutableLiveData<PropertyDataBinding> propertyBindingLiveData = new MutableLiveData<>();
   private final Executor doInBackground = Executors.newSingleThreadExecutor();
   private Property currentProperty;
 
   private LiveData<List<PointOfInterest>> allPointOfInterest;
   private List<PointOfInterest> currentPropertyPointOfInterest;
 
+  private LiveData<List<RealEstateAgent>> allAgents;
+
   @Inject
   public EditPropertyViewModel(
       PropertyRepository propertyRepository,
       PhotoRepository photoRepository,
-      PointOfInterestRepository pointOfInterestRepository) {
+      PointOfInterestRepository pointOfInterestRepository,
+      AgentRepository agentRepository) {
     this.propertyRepository = propertyRepository;
     this.photoRepository = photoRepository;
     this.pointOfInterestRepository = pointOfInterestRepository;
+    this.agentRepository = agentRepository;
   }
 
   public LiveData<PropertyDataBinding> updateProperty(int propertyId) {
-    doInBackground.execute(
-        () -> {
-          currentProperty = propertyRepository.getById(propertyId);
-          propertyToBeUpdated.setValue(new PropertyDataBinding(currentProperty));
+
+    final LiveData<Property> currentPropertyLiveData = propertyRepository.getById(propertyId);
+    currentPropertyLiveData.observeForever(
+        new Observer<Property>() {
+
+          @Override
+          public void onChanged(Property property) {
+            currentProperty = property;
+            propertyBindingLiveData.setValue(new PropertyDataBinding(currentProperty));
+            currentPropertyLiveData.removeObserver(this);
+          }
         });
-    return propertyToBeUpdated;
+
+    return propertyBindingLiveData;
   }
 
-  public PropertyDataBinding createNewProperty() {
+  public LiveData<PropertyDataBinding> createNewProperty() {
     currentProperty = new Property();
     currentProperty.setPhotoList(new ArrayList<>());
     currentProperty.setAddress(new Property.Address());
     currentProperty.setPointOfInterestNearby(new ArrayList<>());
-    return new PropertyDataBinding(currentProperty);
+    propertyBindingLiveData.setValue(new PropertyDataBinding(currentProperty));
+    return propertyBindingLiveData;
   }
 
   public void persist() {
     // TODO REFACTORING
-    if(currentProperty.getMainPhotoUrl().isEmpty()){
+
+    currentProperty = propertyBindingLiveData.getValue().getProperty();
+    final int selectedItemPos = propertyBindingLiveData.getValue().getSelectedAgentPosition();
+    currentProperty.setAgent(allAgents.getValue().get(selectedItemPos));
+
+    if (currentProperty.getMainPhotoUrl().isEmpty()) {
       currentProperty.setMainPhotoUrl(currentProperty.getPhotoList().get(0).getUrl());
     }
     final LiveData<Integer> livePropertyId = propertyRepository.create(currentProperty);
@@ -105,10 +127,9 @@ public class EditPropertyViewModel extends ViewModel {
         });
   }
 
-  public List<RealEstateAgent> getAllAgents() {
-    final List<RealEstateAgent> agentList = new ArrayList<>();
-    agentList.add(0, AGENT_PLACEHOLDER);
-    return agentList;
+  public LiveData<List<RealEstateAgent>> getAllAgents() {
+    allAgents = agentRepository.getAll();
+    return allAgents;
   }
 
   public LiveData<List<PointOfInterest>> getAllPointsOfInterests() {
@@ -153,7 +174,7 @@ public class EditPropertyViewModel extends ViewModel {
     currentProperty.setMainPhotoUrl(photo.getUrl());
   }
 
-  public boolean isPhotoDefined(){
+  public boolean isPhotoDefined() {
     return !currentProperty.getPhotoList().isEmpty();
   }
 }

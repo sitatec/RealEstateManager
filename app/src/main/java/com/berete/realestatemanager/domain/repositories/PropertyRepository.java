@@ -25,7 +25,7 @@ public class PropertyRepository {
     return propertyProvider.create(property);
   }
 
-  public Property getById(int id) {
+  public LiveData<Property> getById(int id) {
     return propertyProvider.getById(id);
   }
 

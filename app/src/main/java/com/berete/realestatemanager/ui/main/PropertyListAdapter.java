@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.ui;
+package com.berete.realestatemanager.ui.main;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,14 +13,17 @@ import com.bumptech.glide.Glide;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PropertyListAdapter
     extends RecyclerView.Adapter<PropertyListAdapter.PropertyViewHolder> {
 
   private List<Property> propertyList;
+  private final Consumer<Integer> onItemClickListener;
 
-  public PropertyListAdapter(List<Property> propertyList) {
+  public PropertyListAdapter(List<Property> propertyList, Consumer<Integer> onItemClickListener) {
     this.propertyList = propertyList;
+    this.onItemClickListener = onItemClickListener;
   }
 
   @NotNull
@@ -36,7 +39,13 @@ public class PropertyListAdapter
     final Property property = propertyList.get(position);
     holder.propertyListItemBinding.setProperty(property);
     Glide.with(holder.propertyListItemBinding.getRoot())
-        .load(property.getMainPhotoUrl()).centerCrop().into(holder.propertyListItemBinding.photo);
+        .load(property.getMainPhotoUrl())
+        .centerCrop()
+        .into(holder.propertyListItemBinding.photo);
+    holder
+        .propertyListItemBinding
+        .getRoot()
+        .setOnClickListener(__ -> onItemClickListener.accept(property.getId()));
   }
 
   @Override
@@ -44,7 +53,7 @@ public class PropertyListAdapter
     return propertyList.size();
   }
 
-  public void updateList(List<Property> newProperties){
+  public void updateList(List<Property> newProperties) {
     propertyList = newProperties;
     notifyDataSetChanged();
   }

@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.ui;
+package com.berete.realestatemanager.ui.detail;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -6,28 +6,21 @@ import androidx.lifecycle.ViewModel;
 import com.berete.realestatemanager.domain.models.Property;
 import com.berete.realestatemanager.domain.repositories.PropertyRepository;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class MainActivityViewModel extends ViewModel {
+public class PropertyDetailViewModel extends ViewModel {
 
   private final PropertyRepository propertyRepository;
-  private LiveData<List<Property>> allProperties;
 
   @Inject
-  public MainActivityViewModel(PropertyRepository propertyRepository) {
+  public PropertyDetailViewModel(PropertyRepository propertyRepository) {
     this.propertyRepository = propertyRepository;
   }
 
-  public LiveData<List<Property>> getProperties(){
-    if(allProperties == null){
-      allProperties = propertyRepository.getAll();
-    }
-    return allProperties;
+  public LiveData<Property> getPropertyById(int propertyId) {
+    return propertyRepository.getById(propertyId);
   }
-
 }
