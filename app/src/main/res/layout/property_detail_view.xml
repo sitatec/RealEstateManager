@@ -88,7 +88,7 @@
 
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -113,7 +113,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="8dp"
                             android:drawableStart="@drawable/ic_money_24"
                             android:drawablePadding="8dp"
                             android:text="@string/price"
@@ -132,7 +132,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="8dp"
                             android:drawableStart="@drawable/ic_square_foot_24"
                             android:drawablePadding="8dp"
                             android:text="@string/surface"
@@ -150,7 +150,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="8dp"
                             android:drawableStart="@drawable/ic_house_24"
                             android:drawablePadding="8dp"
                             android:text="@string/number_of_rooms_txt"
@@ -169,7 +169,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -193,7 +193,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="8dp"
                             android:drawableStart="@drawable/ic_location_24"
                             android:drawablePadding="8dp"
                             android:text="@string/point_of_interest_nearby"
@@ -211,7 +211,7 @@
 
                     <ImageView
                         android:id="@+id/locationPreview"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
@@ -225,7 +225,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="7dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text='@{"Publication date: " + property.formattedPubDate}'
                         android:textSize="15sp"
                         tools:text="Publication date : 18/04/2031" />
@@ -289,6 +290,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:visibility="gone"
             android:visibility="@{property == null &amp;&amp; footerOrientation == 0 ? View.VISIBLE : View.GONE}"
             android:src="@drawable/detail_placeholder"
             android:background="@color/light_grey"

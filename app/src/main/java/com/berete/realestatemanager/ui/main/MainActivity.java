@@ -21,6 +21,7 @@ import com.berete.realestatemanager.ui.detail.PropertyDetailActivity;
 import com.berete.realestatemanager.ui.detail.PropertyDetailFragment;
 import com.berete.realestatemanager.ui.edit.EditPropertyActivity;
 import com.berete.realestatemanager.ui.list.PropertyListFragment;
+import com.berete.realestatemanager.ui.map.MapActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
   private boolean onNavigationItemSelected(MenuItem menuItem){
     if (menuItem.getItemId() == R.id.map){
-      // TODO implement
+      startActivity(new Intent(this, MapActivity.class));
       return true;
     }
     return false;
@@ -129,10 +130,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void startDetailActivity(int propertyId) {
-    final Bundle bundle = new Bundle();
-    bundle.putInt(PROPERTY_ID_ARG_KEY, propertyId);
+    final Bundle arguments = new Bundle();
+    arguments.putInt(PROPERTY_ID_ARG_KEY, propertyId);
+    arguments.putInt(LAYOUT_ORIENTATION_KEY, LinearLayout.VERTICAL);
     final Intent startDetailIntent = new Intent(this, PropertyDetailActivity.class);
-    startDetailIntent.putExtras(bundle);
+    startDetailIntent.putExtras(arguments);
     startActivity(startDetailIntent);
   }
 
