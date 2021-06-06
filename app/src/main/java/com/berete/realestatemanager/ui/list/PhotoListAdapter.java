@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.ui;
+package com.berete.realestatemanager.ui.list;
 
 import android.view.LayoutInflater;
 import android.view.View;

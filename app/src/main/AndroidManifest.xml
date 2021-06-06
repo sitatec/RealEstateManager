@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RealEstateManager">
-        <activity android:name=".ui.detail.DetailActivity"
+        <activity android:name=".ui.detail.PropertyDetailActivity"
             android:parentActivityName=".ui.main.MainActivity"/>
 
         <activity

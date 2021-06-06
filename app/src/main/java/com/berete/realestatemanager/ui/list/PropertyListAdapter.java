@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.ui.main;
+package com.berete.realestatemanager.ui.list;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -19,9 +19,9 @@ public class PropertyListAdapter
     extends RecyclerView.Adapter<PropertyListAdapter.PropertyViewHolder> {
 
   private List<Property> propertyList;
-  private final Consumer<Integer> onItemClickListener;
+  private final Consumer<Property> onItemClickListener;
 
-  public PropertyListAdapter(List<Property> propertyList, Consumer<Integer> onItemClickListener) {
+  public PropertyListAdapter(List<Property> propertyList, Consumer<Property> onItemClickListener) {
     this.propertyList = propertyList;
     this.onItemClickListener = onItemClickListener;
   }
@@ -45,7 +45,7 @@ public class PropertyListAdapter
     holder
         .propertyListItemBinding
         .getRoot()
-        .setOnClickListener(__ -> onItemClickListener.accept(property.getId()));
+        .setOnClickListener(__ -> onItemClickListener.accept(property));
   }
 
   @Override

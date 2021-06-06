@@ -16,6 +16,7 @@
         android:layout_width="@dimen/photo_size"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        android:textAlignment="center"
         android:background="#7F000000"
         android:ellipsize="end"
         android:maxLines="2"
