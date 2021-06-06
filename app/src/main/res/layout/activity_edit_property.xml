@@ -27,13 +27,8 @@
         android:orientation="vertical"
         tools:context=".ui.edit.EditPropertyActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:menu="@menu/menu_edit_toolbar" />
+        <include
+            layout="@layout/toolbar"/>
 
         <ScrollView
             android:layout_width="match_parent"
