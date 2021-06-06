@@ -68,6 +68,7 @@ public class PropertyEntity extends Property {
     id = parent.getId();
     agentID = parent.getAgent().getId();
     setMainPhotoUrl(parent.getMainPhotoUrl());
+    address = new AddressEntity(parent.getAddress());
   }
 
   public static class AddressEntity extends Address {
@@ -77,6 +78,10 @@ public class PropertyEntity extends Property {
 
     public AddressEntity(String locality, String postalCode, String formattedAddress){
       super(locality, postalCode, formattedAddress);
+    }
+
+    public AddressEntity(Address address){
+      super(address.getLocality(), address.getPostalCode(), address.getFormattedAddress());
     }
   }
 }

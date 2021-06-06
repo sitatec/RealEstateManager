@@ -21,22 +21,21 @@ public class PropertyDataBinding extends BaseObservable {
   public PropertyDataBinding(Property property) {
     this.property = property;
     if (property.getPublicationDate() != 0){
-      publicationDate = getFormattedPublicationDate();
+      publicationDate = property.getFormattedPubDate();
     }else {
       publicationDate = Utils.getTodayDate();
     }
     if (property.getSaleDate() != 0){
-      saleDate = getFormattedSaleDate();
+      saleDate = property.getFormattedSaleDate();
     }
   }
 
-  public Property getProperty() {
+  public void apply() {
     property.setPublicationDate(
         LocalDate.parse(publicationDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
     if (property.isSold()){
       property.setSaleDate(LocalDate.parse(saleDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
     }
-    return property;
   }
 
   @Bindable

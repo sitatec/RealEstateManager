@@ -38,7 +38,8 @@ public class EditPropertyViewModel extends ViewModel {
   private final PointOfInterestRepository pointOfInterestRepository;
   private final AgentRepository agentRepository;
 
-  private final MutableLiveData<PropertyDataBinding> propertyBindingLiveData = new MutableLiveData<>();
+  private final MutableLiveData<PropertyDataBinding> propertyBindingLiveData =
+      new MutableLiveData<>();
   private final Executor doInBackground = Executors.newSingleThreadExecutor();
   private Property currentProperty;
 
@@ -68,7 +69,9 @@ public class EditPropertyViewModel extends ViewModel {
           @Override
           public void onChanged(Property property) {
             currentProperty = property;
-            propertyBindingLiveData.setValue(new PropertyDataBinding(currentProperty));
+            final PropertyDataBinding propertyDataBinding = new PropertyDataBinding(currentProperty);
+            propertyDataBinding.setSelectedAgentPosition(currentProperty.getAgent().getId());
+            propertyBindingLiveData.setValue(propertyDataBinding);
             currentPropertyLiveData.removeObserver(this);
           }
         });
@@ -88,14 +91,21 @@ public class EditPropertyViewModel extends ViewModel {
   public void persist() {
     // TODO REFACTORING
 
-    currentProperty = propertyBindingLiveData.getValue().getProperty();
-    final int selectedItemPos = propertyBindingLiveData.getValue().getSelectedAgentPosition();
+    propertyBindingLiveData.getValue().apply();
+    int selectedItemPos = propertyBindingLiveData.getValue().getSelectedAgentPosition();
     currentProperty.setAgent(allAgents.getValue().get(selectedItemPos));
 
     if (currentProperty.getMainPhotoUrl().isEmpty()) {
       currentProperty.setMainPhotoUrl(currentProperty.getPhotoList().get(0).getUrl());
     }
-    final LiveData<Integer> livePropertyId = propertyRepository.create(currentProperty);
+
+    LiveData<Integer> livePropertyId;
+    if (currentProperty.getId() == 0) {
+      livePropertyId = propertyRepository.create(currentProperty);
+    } else {
+      propertyRepository.update(currentProperty);
+      livePropertyId = new MutableLiveData<>(currentProperty.getId());
+    }
 
     livePropertyId.observeForever(
         new Observer<Integer>() {

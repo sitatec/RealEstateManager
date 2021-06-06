@@ -3,7 +3,6 @@ package com.berete.realestatemanager.ui.edit;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.berete.realestatemanager.R;
@@ -28,7 +26,8 @@ import com.berete.realestatemanager.databinding.PhotoDescriptionEditorLayoutBind
 import com.berete.realestatemanager.domain.models.Photo;
 import com.berete.realestatemanager.domain.models.Property;
 import com.berete.realestatemanager.domain.models.Property.PointOfInterest;
-import com.berete.realestatemanager.ui.PhotoListAdapter;
+import com.berete.realestatemanager.ui.list.PhotoListAdapter;
+import com.berete.realestatemanager.ui.detail.PropertyDetailActivity;
 import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
@@ -37,8 +36,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class EditPropertyActivity extends AppCompatActivity {
-
-  public static final String PROPERTY_ID_KEY = "PROPERTY_ID_KEY";
 
   private ActivityEditPropertyBinding binding;
   private EditPropertyViewModel viewModel;
@@ -52,7 +49,6 @@ public class EditPropertyActivity extends AppCompatActivity {
     setEditMode(); // Create || Update
     setSupportActionBar(binding.toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    setupViews();
   }
 
   @Override
@@ -86,14 +82,19 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void setEditMode() {
-    final int propertyId = getIntent().getIntExtra(PROPERTY_ID_KEY, 0);
+    final int propertyId = getIntent().getIntExtra(PropertyDetailActivity.PROPERTY_ID_ARG_KEY, 0);
     if (propertyId != 0) {
-      viewModel.updateProperty(propertyId).observe(this, binding::setProperty);
+      viewModel.updateProperty(propertyId).observe(this, this::setProperty);
       binding.toolbar.setTitle(R.string.update_property_txt);
     } else {
-      viewModel.createNewProperty().observe(this, binding::setProperty);
+      viewModel.createNewProperty().observe(this, this::setProperty);
       binding.toolbar.setTitle(R.string.create_property_txt);
     }
+  }
+
+  private void setProperty(PropertyDataBinding property){
+    binding.setProperty(property);
+    setupViews();
   }
 
   private void setupViews() {
@@ -114,7 +115,6 @@ public class EditPropertyActivity extends AppCompatActivity {
 
   private void setupAgentSelector() {
     viewModel.getAllAgents().observe(this, agentList -> {
-      agentList.add(0, EditPropertyViewModel.AGENT_PLACEHOLDER);
       final AgentSpinnerAdapter adapter = new AgentSpinnerAdapter(this, agentList);
       binding.agentSelector.setAdapter(adapter);
     });
@@ -146,6 +146,7 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void createPointOfInterest(String pointOfInterestName) {
+    Log.d("CREATE_POINT_OF_I", "CALLED WITH VALUE : " + pointOfInterestName);
     if (pointOfInterestName.length() < 3) return;
     final PointOfInterest pointOfInterest = new PointOfInterest(pointOfInterestName);
     viewModel
@@ -153,12 +154,12 @@ public class EditPropertyActivity extends AppCompatActivity {
         .observe(
             this,
             pointOfInterestId -> {
+              Log.d("ON_POI_CREATED", "CALLED WITH VALUE : " + pointOfInterestName);
               if(pointOfInterestId == null || pointOfInterestId.equals(0)) return;
               final TextView pointOfInterestView = getPointOfInterestView(false);
               pointOfInterest.setId(pointOfInterestId);
               pointOfInterestView.setText(pointOfInterestName);
               pointOfInterestView.setTag(pointOfInterest);
-              binding.pointOfInterestsContainer.addView(pointOfInterestView);
               binding.addPointOfInterest.setVisibility(View.GONE);
             });
   }

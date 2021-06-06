@@ -30,4 +30,6 @@
     <string name="point_of_interest_nearby">Point of interest nearby</string>
     <string name="agent">Agent</string>
     <string name="details_txt">Details</string>
+    <string name="edit">Edit</string>
+    <string name="filter">Filter</string>
 </resources>

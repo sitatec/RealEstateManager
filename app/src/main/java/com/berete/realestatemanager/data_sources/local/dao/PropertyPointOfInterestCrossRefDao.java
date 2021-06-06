@@ -12,6 +12,6 @@ public interface PropertyPointOfInterestCrossRefDao {
   @Delete
   void delete(Relationships.PropertyPointOfInterestCrossRef associationClass);
 
-  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   void create(Relationships.PropertyPointOfInterestCrossRef associationClass);
 }
