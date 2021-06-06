@@ -22,7 +22,7 @@ public interface PointOfInterestDao {
   LiveData<List<PointOfInterestEntity>> getPointOfInterestByPropertyId(int property_id);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  long create(PointOfInterestEntity pointOfInterest);
+  long[] create(PointOfInterestEntity... pointOfInterest);
 
   @Query("SELECT * FROM point_of_interest")
   LiveData<List<PointOfInterestEntity>> getAll();

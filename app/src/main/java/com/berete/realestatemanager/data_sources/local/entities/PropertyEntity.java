@@ -49,6 +49,7 @@ public class PropertyEntity extends Property {
         null);
     setMainPhotoUrl(mainPhotoUrl);
     setId(id);
+    this.address = address;
   }
 
   public PropertyEntity(Property parent) {

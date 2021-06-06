@@ -27,7 +27,7 @@ public interface RealEstateAgentDao {
   void delete(RealEstateAgentEntity agent);
 
   @Insert
-  void create(RealEstateAgentEntity agent);
+  void create(RealEstateAgentEntity... agent);
 
   @Query("SELECT * FROM real_estate_agent")
   LiveData<List<RealEstateAgentEntity>> getAll();

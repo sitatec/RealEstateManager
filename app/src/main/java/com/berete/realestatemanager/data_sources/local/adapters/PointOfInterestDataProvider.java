@@ -34,7 +34,7 @@ public class PointOfInterestDataProvider implements PointOfInterestProvider {
         .execute(
             () -> {
               liveId.postValue(
-                  (int) pointOfInterestDao.create(new PointOfInterestEntity(pointOfInterest)));
+                  (int) pointOfInterestDao.create(new PointOfInterestEntity(pointOfInterest))[0]);
             });
     return liveId;
   }

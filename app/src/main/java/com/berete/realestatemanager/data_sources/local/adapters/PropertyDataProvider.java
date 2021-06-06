@@ -127,7 +127,7 @@ public class PropertyDataProvider implements PropertyProvider {
             () -> {
               final PropertyEntity propertyEntity = new PropertyEntity(property);
               Log.d("AGENT_ID", "IS :" + propertyEntity.agentID + " | VS :" + property.getAgent().getId());
-              final int id = (int) propertyDao.create(propertyEntity);
+              final int id = (int) propertyDao.create(propertyEntity)[0];
               liveId.postValue(id);
               property.setId(id);
               allProperties.getValue().add(property);

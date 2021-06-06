@@ -3,6 +3,7 @@ package com.berete.realestatemanager.data_sources.local.entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.berete.realestatemanager.domain.models.Photo;
@@ -28,6 +29,13 @@ public class PhotoEntity extends Photo {
 
   public PhotoEntity(String url, String description) {
     super(url, description);
+  }
+
+
+  @Ignore
+  public PhotoEntity(String url, String description, int propertyId) {
+    super(url, description);
+    this.propertyId = propertyId;
   }
 
   public PhotoEntity(Photo parent) {

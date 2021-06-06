@@ -29,6 +29,6 @@ public interface PropertyDao {
   void delete(PropertyEntity property);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  long create(PropertyEntity property);
+  long[] create(PropertyEntity... property);
 
 }
