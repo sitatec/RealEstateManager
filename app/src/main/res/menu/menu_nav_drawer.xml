@@ -7,8 +7,8 @@
         android:icon="@drawable/ic_map_24"
         />
 
-    <item android:id="@+id/simulator"
-        android:title="@string/loan_simulator"
+    <item android:id="@+id/loanCalculator"
+        android:title="@string/loan_calculator"
         android:icon="@drawable/ic_outline_calculate_24"
         />
 

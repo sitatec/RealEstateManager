@@ -35,11 +35,19 @@
     <string name="view_on_map">View on map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="loan_simulator">Loan simulator</string>
+    <string name="loan_calculator">Loan calculator</string>
     <string name="rational_location_request_msg">To display nearby restaurants, allow Go4Lunch to access your Location.</string>
     <string name="when_location_permission_denied">"If you continue without allowing the location permission, nearby restaurants will not be displayed neither on the map nor in the restaurants list.     "</string>
     <string name="allow_location_permission">continue</string>
     <string name="not_now_txt">not now</string>
     <string name="continue_without_permission">continue without permission</string>
     <string name="allow_location_permission_1">allow</string>
+    <string name="loan_amount">Loan amount (USD)</string>
+    <string name="duration_years">Duration (years)</string>
+    <string name="assurance_rate">Assurance rate (%)</string>
+    <string name="monthly_rate">Interest rate (%)</string>
+    <string name="calculate">Calculate</string>
+    <string name="monthly_payment">Monthly payment</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
 </resources>

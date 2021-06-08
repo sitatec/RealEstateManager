@@ -10,7 +10,7 @@
 
         <import type="android.text.TextUtils" />
 
-        <import type="com.berete.realestatemanager.Utils" />
+        <import type="com.berete.realestatemanager.utils.CurrencyUtils" />
 
         <variable
             name="property"
@@ -125,7 +125,7 @@
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/empty_drawable"
                             android:drawablePadding="8dp"
-                            android:text="@{Utils.convertDoubleToCurrency(property.price)}"
+                            android:text="@{CurrencyUtils.convertDoubleToCurrency(property.price)}"
                             tools:text="$18.000.000" />
 
 

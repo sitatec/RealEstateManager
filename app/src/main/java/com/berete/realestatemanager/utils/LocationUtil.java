@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.ui.map;
+package com.berete.realestatemanager.utils;
 
 import android.content.Context;
 import android.location.Address;

@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.ui.main;
+package com.berete.realestatemanager.ui.core;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,7 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.berete.realestatemanager.ui.detail.PropertyDetailActivity;
 import com.berete.realestatemanager.ui.detail.PropertyDetailFragment;
 import com.berete.realestatemanager.ui.edit.EditPropertyActivity;
 import com.berete.realestatemanager.ui.list.PropertyListFragment;
+import com.berete.realestatemanager.ui.loan_calculator.LoanCalculatorActivity;
 import com.berete.realestatemanager.ui.map.MapActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-    super.onPostCreate(savedInstanceState, persistentState);
+  protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+    super.onPostCreate(savedInstanceState);
+    actionBarDrawerToggle.syncState();
   }
 
   @Override
@@ -102,12 +103,10 @@ public class MainActivity extends AppCompatActivity {
         .commit();
   }
 
-
   private void setupNavigationDrawer(){
     final DrawerLayout drawerLayout = findViewById(R.id.root);
     actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     drawerLayout.addDrawerListener(actionBarDrawerToggle);
-    actionBarDrawerToggle.syncState();
     final NavigationView navigationView = findViewById(R.id.navigationView);
     navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
   }
@@ -116,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     if (menuItem.getItemId() == R.id.map){
       startActivity(new Intent(this, MapActivity.class));
       return true;
+    } else if(menuItem.getItemId() == R.id.loanCalculator){
+      startActivity(new Intent(this, LoanCalculatorActivity.class));
     }
     return false;
   }

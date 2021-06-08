@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.berete.realestatemanager.Utils" />
+        <import type="com.berete.realestatemanager.utils.CurrencyUtils" />
 
         <import type="android.view.View" />
 
@@ -50,7 +50,7 @@
                 android:id="@+id/propertyPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{Utils.convertDoubleToCurrency(property.price)}"
+                android:text="@{CurrencyUtils.convertDoubleToCurrency(property.price)}"
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"

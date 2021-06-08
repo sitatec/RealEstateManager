@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.berete.realestatemanager.Utils" />
+
+        <variable
+            name="binding"
+            type="com.berete.realestatemanager.ui.loan_calculator.LoanCalculatorDataBinding" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:toos="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/monthlyPaymentLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/monthly_payment"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/monthlyPayment"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/monthlyPayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="serif"
+                    android:text="@{binding.monthlyPayment}"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/monthlyPaymentLabel"
+                    toos:text="$4.694" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/loanAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="8dp"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:layout_constraintBottom_toTopOf="@id/duration"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/monthlyPayment">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/loan_amount"
+                        android:inputType="numberDecimal"
+                        android:text="@={binding.loanAmount}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loanAmount">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/duration_years"
+                        android:inputType="number"
+                        android:text="@={binding.duration}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/interestRate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="8dp"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:layout_constraintBottom_toTopOf="@id/interestRateBy"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/assuranceRate"
+                    app:layout_constraintTop_toBottomOf="@id/duration">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monthly_rate"
+                        android:inputType="numberDecimal"
+                        android:text="@={binding.interestRate}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/assuranceRate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintLeft_toRightOf="@id/interestRate"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/interestRate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/assurance_rate"
+                        android:inputType="numberDecimal"
+                        android:text="@={binding.assuranceRate}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/interestRateBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="By"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintLeft_toLeftOf="@id/interestRate"
+                    app:layout_constraintRight_toRightOf="@id/interestRate"
+                    app:layout_constraintTop_toBottomOf="@id/interestRate"
+                    app:layout_constraintBottom_toTopOf="@id/interestRateDurationSwitcher"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/interestRateDurationSwitcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textOff="@string/month"
+                    android:textOn="@string/year"
+                    android:checked="@={binding.annualInterestRate}"
+                    android:thumb="@drawable/switch_thumb"
+                    app:layout_constraintLeft_toLeftOf="@id/interestRate"
+                    app:layout_constraintRight_toRightOf="@id/interestRate"
+                    app:layout_constraintTop_toBottomOf="@id/interestRateBy"
+                    app:showText="true"
+                    app:switchTextAppearance="@style/switchTextAppearance"
+                    app:track="@drawable/switch_track" />
+
+                <TextView
+                    android:id="@+id/assuranceRateBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="By"
+                    app:layout_constraintLeft_toLeftOf="@id/assuranceRate"
+                    app:layout_constraintRight_toRightOf="@id/assuranceRate"
+                    app:layout_constraintTop_toBottomOf="@id/assuranceRate"
+                    app:layout_constraintBottom_toTopOf="@id/assuranceRateDurationSwitcher"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/assuranceRateDurationSwitcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textOff="@string/month"
+                    android:textOn="@string/year"
+                    android:checked="@={binding.annualAssuranceRate}"
+                    android:thumb="@drawable/switch_thumb"
+                    app:layout_constraintLeft_toLeftOf="@id/assuranceRate"
+                    app:layout_constraintRight_toRightOf="@id/assuranceRate"
+                    app:layout_constraintTop_toBottomOf="@id/assuranceRateBy"
+                    app:showText="true"
+                    app:switchTextAppearance="@style/switchTextAppearance"
+                    app:track="@drawable/switch_track" />
+
+
+                <!--            <Button-->
+                <!--                android:id="@+id/calculate"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginBottom="16dp"-->
+                <!--                android:text="@string/calculate"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+                <!--                app:layout_constraintRight_toRightOf="parent" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</layout>

@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.berete.realestatemanager.R;
-import com.berete.realestatemanager.ui.main.MainActivity;
+import com.berete.realestatemanager.ui.core.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 

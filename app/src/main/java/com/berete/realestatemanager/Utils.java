@@ -49,11 +49,4 @@ public class Utils {
     WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     return wifi.isWifiEnabled();
   }
-
-  public static String convertDoubleToCurrency(double number) {
-    final NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-    numberFormat.setMaximumFractionDigits(0);
-    numberFormat.setCurrency(Currency.getInstance("USD"));
-    return numberFormat.format(number);
-  }
 }

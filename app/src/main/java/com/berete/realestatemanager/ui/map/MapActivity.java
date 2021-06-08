@@ -2,7 +2,6 @@ package com.berete.realestatemanager.ui.map;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +13,7 @@ import com.berete.realestatemanager.R;
 import com.berete.realestatemanager.domain.models.Property;
 import com.berete.realestatemanager.ui.detail.PropertyDetailActivity;
 import com.berete.realestatemanager.ui.list.PropertyListViewModel;
+import com.berete.realestatemanager.utils.LocationUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,8 +23,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -57,6 +55,7 @@ public class MapActivity extends AppCompatActivity {
   @SuppressLint("MissingPermission")
   private void setupMap(GoogleMap map) {
     this.map = map;
+    map.getUiSettings().setMapToolbarEnabled(false);
     map.setInfoWindowAdapter(new CustomInfoWindow(getLayoutInflater()));
     map.setOnInfoWindowClickListener(this::onInfoWindowClickListener);
     locationProvider.getCurrentCoordinates(
