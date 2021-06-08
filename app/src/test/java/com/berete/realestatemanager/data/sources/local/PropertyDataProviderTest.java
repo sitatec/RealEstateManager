@@ -1,13 +1,13 @@
-//package com.berete.realestatemanager.data_sources.local;
+//package com.berete.realestatemanager.data_sources.sources.local;
 //
-//import com.berete.realestatemanager.data_sources.local.adapters.PropertyDataProvider;
-//import com.berete.realestatemanager.data_sources.local.dao.PhotoDao;
-//import com.berete.realestatemanager.data_sources.local.dao.PointOfInterestDao;
-//import com.berete.realestatemanager.data_sources.local.dao.PropertyDao;
-//import com.berete.realestatemanager.data_sources.local.dao.RealEstateAgentDao;
-//import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
-//import com.berete.realestatemanager.data_sources.local.entities.Relationships.PropertyWithPhotosAndPointOfInterest;
-//import com.berete.realestatemanager.data_sources.local.entities.Relationships.RealEstateAgentWithProperties;
+//import com.berete.realestatemanager.data_sources.sources.local.adapters.PropertyDataProvider;
+//import com.berete.realestatemanager.data_sources.sources.local.dao.PhotoDao;
+//import com.berete.realestatemanager.data_sources.sources.local.dao.PointOfInterestDao;
+//import com.berete.realestatemanager.data_sources.sources.local.dao.PropertyDao;
+//import com.berete.realestatemanager.data_sources.sources.local.dao.RealEstateAgentDao;
+//import com.berete.realestatemanager.data_sources.sources.local.entities.PropertyEntity;
+//import com.berete.realestatemanager.data_sources.sources.local.entities.Relationships.PropertyWithPhotosAndPointOfInterest;
+//import com.berete.realestatemanager.data_sources.sources.local.entities.Relationships.RealEstateAgentWithProperties;
 //import com.berete.realestatemanager.domain.models.Property;
 //
 //import org.junit.Before;

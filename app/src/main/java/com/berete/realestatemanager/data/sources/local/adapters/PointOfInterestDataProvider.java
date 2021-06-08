@@ -1,11 +1,11 @@
-package com.berete.realestatemanager.data_sources.local.adapters;
+package com.berete.realestatemanager.data.sources.local.adapters;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.berete.realestatemanager.data_sources.local.dao.PointOfInterestDao;
-import com.berete.realestatemanager.data_sources.local.entities.PointOfInterestEntity;
+import com.berete.realestatemanager.data.sources.local.dao.PointOfInterestDao;
+import com.berete.realestatemanager.data.sources.local.entities.PointOfInterestEntity;
 import com.berete.realestatemanager.domain.data_providers.PointOfInterestProvider;
 import com.berete.realestatemanager.domain.models.Property;
 

@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.data_sources.local.dao;
+package com.berete.realestatemanager.data.sources.local.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -8,9 +8,8 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.berete.realestatemanager.data_sources.local.entities.Relationships;
-import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
-import com.berete.realestatemanager.domain.models.RealEstateAgent;
+import com.berete.realestatemanager.data.sources.local.entities.Relationships;
+import com.berete.realestatemanager.data.sources.local.entities.RealEstateAgentEntity;
 
 import java.util.List;
 

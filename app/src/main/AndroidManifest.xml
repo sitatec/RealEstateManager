@@ -41,6 +41,11 @@
             android:name=".ui.loan_calculator.LoanCalculatorActivity"
             android:parentActivityName=".ui.core.MainActivity" />
 
+        <provider
+            android:authorities="@string/property_content_provider_authorities"
+            android:name=".data.providers.PropertyProvider"
+            />
+
     </application>
 
 </manifest>

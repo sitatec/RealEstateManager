@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.data_sources.local.entities;
+package com.berete.realestatemanager.data.sources.local.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;

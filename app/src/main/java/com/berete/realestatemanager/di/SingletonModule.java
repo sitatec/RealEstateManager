@@ -2,13 +2,11 @@ package com.berete.realestatemanager.di;
 
 import android.content.Context;
 
-import com.berete.realestatemanager.data_sources.local.Database;
-import com.berete.realestatemanager.data_sources.local.adapters.PhotoDataProvider;
-import com.berete.realestatemanager.data_sources.local.adapters.PointOfInterestDataProvider;
-import com.berete.realestatemanager.data_sources.local.adapters.PropertyDataProvider;
-import com.berete.realestatemanager.data_sources.local.adapters.RealEstateAgentDataProvider;
-import com.berete.realestatemanager.domain.data_providers.PointOfInterestProvider;
-import com.berete.realestatemanager.domain.data_providers.RealEstateAgentProvider;
+import com.berete.realestatemanager.data.sources.local.Database;
+import com.berete.realestatemanager.data.sources.local.adapters.PhotoDataProvider;
+import com.berete.realestatemanager.data.sources.local.adapters.PointOfInterestDataProvider;
+import com.berete.realestatemanager.data.sources.local.adapters.PropertyDataProvider;
+import com.berete.realestatemanager.data.sources.local.adapters.RealEstateAgentDataProvider;
 
 import org.jetbrains.annotations.NotNull;
 

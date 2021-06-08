@@ -1,10 +1,9 @@
 package com.berete.realestatemanager.di;
 
-import com.berete.realestatemanager.data_sources.local.adapters.PhotoDataProvider;
-import com.berete.realestatemanager.data_sources.local.adapters.PointOfInterestDataProvider;
-import com.berete.realestatemanager.data_sources.local.adapters.PropertyDataProvider;
-import com.berete.realestatemanager.data_sources.local.adapters.RealEstateAgentDataProvider;
-import com.berete.realestatemanager.data_sources.local.dao.RealEstateAgentDao;
+import com.berete.realestatemanager.data.sources.local.adapters.PhotoDataProvider;
+import com.berete.realestatemanager.data.sources.local.adapters.PointOfInterestDataProvider;
+import com.berete.realestatemanager.data.sources.local.adapters.PropertyDataProvider;
+import com.berete.realestatemanager.data.sources.local.adapters.RealEstateAgentDataProvider;
 import com.berete.realestatemanager.domain.data_providers.PhotoProvider;
 import com.berete.realestatemanager.domain.data_providers.PointOfInterestProvider;
 import com.berete.realestatemanager.domain.data_providers.PropertyProvider;

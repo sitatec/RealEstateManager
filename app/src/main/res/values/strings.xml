@@ -50,4 +50,5 @@
     <string name="monthly_payment">Monthly payment</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
+    <string name="property_content_provider_authorities">com.berete.realestatemanager.data.providers.PropertyProvider</string>
 </resources>

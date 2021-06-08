@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.data_sources.local.dao;
+package com.berete.realestatemanager.data.sources.local.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -8,9 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
-import com.berete.realestatemanager.domain.data_providers.PhotoProvider;
-import com.berete.realestatemanager.domain.models.Photo;
+import com.berete.realestatemanager.data.sources.local.entities.PhotoEntity;
 
 import java.util.List;
 

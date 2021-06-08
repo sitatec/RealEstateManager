@@ -1,10 +1,10 @@
-package com.berete.realestatemanager.data_sources.local.adapters;
+package com.berete.realestatemanager.data.sources.local.adapters;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.berete.realestatemanager.data_sources.local.dao.PhotoDao;
-import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
+import com.berete.realestatemanager.data.sources.local.dao.PhotoDao;
+import com.berete.realestatemanager.data.sources.local.entities.PhotoEntity;
 import com.berete.realestatemanager.domain.data_providers.PhotoProvider;
 import com.berete.realestatemanager.domain.models.Photo;
 

@@ -1,4 +1,4 @@
-package com.berete.realestatemanager.data_sources.local.adapters;
+package com.berete.realestatemanager.data.sources.local.adapters;
 
 import android.util.Log;
 
@@ -6,17 +6,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.berete.realestatemanager.data_sources.local.dao.PhotoDao;
-import com.berete.realestatemanager.data_sources.local.dao.PointOfInterestDao;
-import com.berete.realestatemanager.data_sources.local.dao.PropertyDao;
-import com.berete.realestatemanager.data_sources.local.dao.PropertyPointOfInterestCrossRefDao;
-import com.berete.realestatemanager.data_sources.local.dao.RealEstateAgentDao;
-import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
-import com.berete.realestatemanager.data_sources.local.entities.PointOfInterestEntity;
-import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
-import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
-import com.berete.realestatemanager.data_sources.local.entities.Relationships;
-import com.berete.realestatemanager.data_sources.local.entities.Relationships.RealEstateAgentWithProperties;
+import com.berete.realestatemanager.data.sources.local.dao.PhotoDao;
+import com.berete.realestatemanager.data.sources.local.dao.PointOfInterestDao;
+import com.berete.realestatemanager.data.sources.local.dao.PropertyDao;
+import com.berete.realestatemanager.data.sources.local.dao.PropertyPointOfInterestCrossRefDao;
+import com.berete.realestatemanager.data.sources.local.dao.RealEstateAgentDao;
+import com.berete.realestatemanager.data.sources.local.entities.PhotoEntity;
+import com.berete.realestatemanager.data.sources.local.entities.PointOfInterestEntity;
+import com.berete.realestatemanager.data.sources.local.entities.PropertyEntity;
+import com.berete.realestatemanager.data.sources.local.entities.Relationships;
+import com.berete.realestatemanager.data.sources.local.entities.Relationships.RealEstateAgentWithProperties;
 import com.berete.realestatemanager.domain.data_providers.PropertyProvider;
 import com.berete.realestatemanager.domain.models.Property;
 

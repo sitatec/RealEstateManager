@@ -1,25 +1,22 @@
-package com.berete.realestatemanager.data_sources.local;
+package com.berete.realestatemanager.data.sources.local;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.berete.realestatemanager.data_sources.local.dao.PhotoDao;
-import com.berete.realestatemanager.data_sources.local.dao.PointOfInterestDao;
-import com.berete.realestatemanager.data_sources.local.dao.PropertyDao;
-import com.berete.realestatemanager.data_sources.local.dao.PropertyPointOfInterestCrossRefDao;
-import com.berete.realestatemanager.data_sources.local.dao.RealEstateAgentDao;
-import com.berete.realestatemanager.data_sources.local.entities.Relationships;
-import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
-import com.berete.realestatemanager.data_sources.local.entities.PointOfInterestEntity;
-import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
-import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
-import com.berete.realestatemanager.data_sources.local.entities.Relationships.PropertyPointOfInterestCrossRef;
+import com.berete.realestatemanager.data.sources.local.dao.PhotoDao;
+import com.berete.realestatemanager.data.sources.local.dao.PointOfInterestDao;
+import com.berete.realestatemanager.data.sources.local.dao.PropertyDao;
+import com.berete.realestatemanager.data.sources.local.dao.PropertyPointOfInterestCrossRefDao;
+import com.berete.realestatemanager.data.sources.local.dao.RealEstateAgentDao;
+import com.berete.realestatemanager.data.sources.local.entities.PhotoEntity;
+import com.berete.realestatemanager.data.sources.local.entities.PointOfInterestEntity;
+import com.berete.realestatemanager.data.sources.local.entities.PropertyEntity;
+import com.berete.realestatemanager.data.sources.local.entities.RealEstateAgentEntity;
+import com.berete.realestatemanager.data.sources.local.entities.Relationships.PropertyPointOfInterestCrossRef;
 import com.berete.realestatemanager.domain.models.Property;
-import com.berete.realestatemanager.domain.models.RealEstateAgent;
 
 import org.jetbrains.annotations.NotNull;
 

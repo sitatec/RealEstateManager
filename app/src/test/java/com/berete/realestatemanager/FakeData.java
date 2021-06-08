@@ -1,9 +1,9 @@
 package com.berete.realestatemanager;
 
-import com.berete.realestatemanager.data_sources.local.entities.PhotoEntity;
-import com.berete.realestatemanager.data_sources.local.entities.PointOfInterestEntity;
-import com.berete.realestatemanager.data_sources.local.entities.PropertyEntity;
-import com.berete.realestatemanager.data_sources.local.entities.RealEstateAgentEntity;
+import com.berete.realestatemanager.data.sources.local.entities.PhotoEntity;
+import com.berete.realestatemanager.data.sources.local.entities.PointOfInterestEntity;
+import com.berete.realestatemanager.data.sources.local.entities.PropertyEntity;
+import com.berete.realestatemanager.data.sources.local.entities.RealEstateAgentEntity;
 import com.berete.realestatemanager.domain.models.Photo;
 import com.berete.realestatemanager.domain.models.Property;
 import com.berete.realestatemanager.domain.models.RealEstateAgent;
