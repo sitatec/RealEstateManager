@@ -31,7 +31,8 @@
             android:parentActivityName=".ui.core.MainActivity" />
 
         <activity
-            android:name=".ui.detail.PropertyDetailActivity" />
+            android:name=".ui.detail.PropertyDetailActivity"
+            android:parentActivityName=".ui.core.MainActivity"/>
 
         <activity
             android:name=".ui.edit.EditPropertyActivity"

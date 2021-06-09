@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Property {
 
   public static final DateTimeFormatter PROPERTY_RELATED_DATE_FORMATTER =
-      DateTimeFormatter.ofPattern("MM/dd/yyyy");
+      DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   private int id;
   private Type type = Type.APARTMENT;

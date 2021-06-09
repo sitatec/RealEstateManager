@@ -26,13 +26,10 @@ public class LoanCalculatorDataBinding extends BaseObservable {
       _interestRate = CurrencyUtils.annualRateToMonthlyRate(_interestRate);
     }
     final double totalMonthlyRate = _assuranceRate + _interestRate;
-    final double monthlyPayment = CurrencyUtils.calculateLoan(loanAmount, totalMonthlyRate, duration);
+    final double monthlyPayment =
+        CurrencyUtils.calculateLoan(loanAmount, totalMonthlyRate, duration);
     return CurrencyUtils.convertDoubleToCurrency(monthlyPayment);
   }
-
-  //  public void setMonthlyPayment(String monthlyPayment){
-  //    this.monthlyPayment = Double.parseDouble(monthlyPayment);
-  //  }
 
   @Bindable
   public String getLoanAmount() {
@@ -40,7 +37,11 @@ public class LoanCalculatorDataBinding extends BaseObservable {
   }
 
   public void setLoanAmount(String loanAmount) {
-    this.loanAmount = Double.parseDouble(loanAmount);
+    if (loanAmount.isEmpty()) {
+      this.loanAmount = 0;
+    } else {
+      this.loanAmount = Double.parseDouble(loanAmount);
+    }
     notifyPropertyChanged(BR.monthlyPayment);
   }
 
@@ -50,7 +51,11 @@ public class LoanCalculatorDataBinding extends BaseObservable {
   }
 
   public void setDuration(String duration) {
-    this.duration = Integer.parseInt(duration);
+    if (duration.isEmpty()) {
+      this.duration = 0;
+    } else {
+      this.duration = Integer.parseInt(duration);
+    }
     notifyPropertyChanged(BR.monthlyPayment);
   }
 
@@ -60,7 +65,11 @@ public class LoanCalculatorDataBinding extends BaseObservable {
   }
 
   public void setInterestRate(String interestRate) {
-    this.interestRate = Double.parseDouble(interestRate);
+    if (interestRate.isEmpty()) {
+      this.interestRate = 0;
+    } else {
+      this.interestRate = Double.parseDouble(interestRate);
+    }
     notifyPropertyChanged(BR.monthlyPayment);
   }
 
@@ -70,7 +79,11 @@ public class LoanCalculatorDataBinding extends BaseObservable {
   }
 
   public void setAssuranceRate(String assuranceRate) {
-    this.assuranceRate = Double.parseDouble(assuranceRate);
+    if (assuranceRate.isEmpty()) {
+      this.assuranceRate = 0;
+    } else {
+      this.assuranceRate = Double.parseDouble(assuranceRate);
+    }
     notifyPropertyChanged(BR.monthlyPayment);
   }
 

@@ -3,6 +3,7 @@ package com.berete.realestatemanager.ui.map;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.berete.realestatemanager.R;
 import com.berete.realestatemanager.domain.models.Property;
+import com.berete.realestatemanager.ui.core.property_filter.PropertyFilterDialog;
 import com.berete.realestatemanager.ui.detail.PropertyDetailActivity;
 import com.berete.realestatemanager.ui.list.PropertyListViewModel;
 import com.berete.realestatemanager.utils.LocationUtil;
@@ -38,7 +40,12 @@ public class MapActivity extends AppCompatActivity {
   GoogleMap map;
   PropertyListViewModel viewModel;
   @Inject public LocationProvider locationProvider;
+  @Inject public LocationPermissionHandler locationPermissionHandler;
   CameraUpdate currentLocationCamera;
+  PropertyFilterDialog propertyFilterDialog;
+
+  List<Property> propertyList;
+  List<Property.PointOfInterest> pointOfInterestList;
 
   @Override
   protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -49,6 +56,9 @@ public class MapActivity extends AppCompatActivity {
     mapFragment.getMapAsync(this::setupMap);
     setupActionsButtons();
     viewModel = new ViewModelProvider(this).get(PropertyListViewModel.class);
+    viewModel
+        .getAllPointOfInterest()
+        .observe(this, pointOfInterests -> pointOfInterestList = pointOfInterests);
     locationUtil = new LocationUtil(this);
   }
 
@@ -58,6 +68,7 @@ public class MapActivity extends AppCompatActivity {
     map.getUiSettings().setMapToolbarEnabled(false);
     map.setInfoWindowAdapter(new CustomInfoWindow(getLayoutInflater()));
     map.setOnInfoWindowClickListener(this::onInfoWindowClickListener);
+
     locationProvider.getCurrentCoordinates(
         location -> {
           map.setMyLocationEnabled(true);
@@ -66,7 +77,14 @@ public class MapActivity extends AppCompatActivity {
               CameraUpdateFactory.newLatLngZoom(
                   new LatLng(location.getLatitude(), location.getLongitude()), 14);
           map.animateCamera(currentLocationCamera);
-          viewModel.getProperties().observe(this, this::onPropertiesFetched);
+          viewModel
+              .getProperties()
+              .observe(
+                  this,
+                  properties -> {
+                    propertyList = properties;
+                    showProperties(properties);
+                  });
         });
   }
 
@@ -79,7 +97,7 @@ public class MapActivity extends AppCompatActivity {
     startActivity(detailActivityIntent);
   }
 
-  private void onPropertiesFetched(List<Property> properties) {
+  private void showProperties(List<Property> properties) {
     map.clear();
     final LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
     LocationUtil.GeoCoordinates currentPropertyCoordinates;
@@ -107,12 +125,24 @@ public class MapActivity extends AppCompatActivity {
   public void onRequestPermissionsResult(
       int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    EasyPermissions.onRequestPermissionsResult(
+        requestCode, permissions, grantResults, locationPermissionHandler);
   }
 
   private void setupActionsButtons() {
     findViewById(R.id.backButton).setOnClickListener(__ -> finish());
     findViewById(R.id.myLocationButton)
         .setOnClickListener(__ -> map.animateCamera(currentLocationCamera));
+    findViewById(R.id.filterButton).setOnClickListener(this::showPropertiesFilterDialog);
+  }
+
+  public void showPropertiesFilterDialog(View __) {
+    if (propertyFilterDialog == null) {
+      propertyFilterDialog =
+          new PropertyFilterDialog(propertyList, pointOfInterestList, this::showProperties);
+    }
+    if (!propertyFilterDialog.isAdded()) {
+      propertyFilterDialog.show(getSupportFragmentManager(), "filter_dialog");
+    }
   }
 }

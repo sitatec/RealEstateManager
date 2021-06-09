@@ -58,4 +58,7 @@
     <string name="sold_in_the_last_x_months">Sold in the last x months</string>
     <string name="in_the_locality">In the locality</string>
     <string name="min_photo_count">Min photo</string>
+    <string name="apply">Apply</string>
+    <string name="reset">Reset</string>
+    <string name="property_filter_dialog_title">Filter properties</string>
 </resources>

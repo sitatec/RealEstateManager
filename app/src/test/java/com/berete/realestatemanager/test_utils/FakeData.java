@@ -1,4 +1,4 @@
-package com.berete.realestatemanager;
+package com.berete.realestatemanager.test_utils;
 
 import com.berete.realestatemanager.data.sources.local.entities.PhotoEntity;
 import com.berete.realestatemanager.data.sources.local.entities.PointOfInterestEntity;
@@ -30,11 +30,11 @@ public interface FakeData {
           fakeAgent);
 
 
-   Property.Address fakeAddressEntity =
-       new Property.Address("locality", "postalCode", "formattedAddr");
+   PropertyEntity.AddressEntity fakeAddressEntity =
+       new PropertyEntity.AddressEntity("locality", "postalCode", "formattedAddr");
    PropertyEntity fakePropertyEntity =
-       new PropertyEntity(
-           Property.Type.APARTMENT, 2.5, 54.56, 5, "desc", fakeAddressEntity, false, 464, 3254);
+       new PropertyEntity(0,
+           Property.Type.APARTMENT, 2.5, 54.56, 5, "desc", fakeAddressEntity, false, 464, 3254, "mainPhotoUrl");
    PhotoEntity fakePropertyPhotoEntity = new PhotoEntity("url", "d");
    PointOfInterestEntity fakePointOfInterestEntity = new PointOfInterestEntity("poi");
    RealEstateAgentEntity fakeAgentEntity =

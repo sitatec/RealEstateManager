@@ -146,12 +146,10 @@ public class EditPropertyViewModel extends ViewModel {
 
   public void addPointOfInterestToCurrentProperty(PointOfInterest pointOfInterest) {
     currentProperty.getPointOfInterestNearby().add(pointOfInterest);
-    propertyRepository.addPointOfInterestToProperty(currentProperty.getId(), pointOfInterest.getId());
   }
 
   public void removePointOrInterestFromCurrentProperty(PointOfInterest pointOfInterest) {
     currentProperty.getPointOfInterestNearby().remove(pointOfInterest);
-    propertyRepository.removePointOfInterestFromProperty(currentProperty.getId(), pointOfInterest.getId());
   }
 
   public LiveData<Integer> createPointOfInterest(PointOfInterest pointOfInterest) {

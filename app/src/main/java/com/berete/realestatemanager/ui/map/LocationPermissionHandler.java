@@ -52,10 +52,12 @@ public class LocationPermissionHandler implements EasyPermissions.PermissionCall
 
   @Override
   public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+    Log.d("LocationPermHandler", "onPermissionsGranted");
     for (Runnable listener : onPermissionGrantedListeners) {
       Log.d("LocationPermHandler", "onPermissionsGranted : " + listener);
       if (listener != null) listener.run();
     }
+    onPermissionGrantedListeners.clear();
   }
 
   @Override

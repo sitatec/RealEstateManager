@@ -41,7 +41,10 @@ public class LocationProvider {
       fusedLocationProviderClient
           .getLastLocation()
           .addOnCompleteListener(getOnCompleteListener(listener));
-    } else locationPermissionHandler.requestPermission(() -> getCurrentCoordinates(listener));
+    }else{
+      onResultListener = listener;
+      // The listener will be called int the warmUpTheLocationProvider.
+    }
   }
 
   private OnCompleteListener<Location> getOnCompleteListener(Consumer<Location> listener) {

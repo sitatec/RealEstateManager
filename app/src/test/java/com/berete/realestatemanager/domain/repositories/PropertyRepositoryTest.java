@@ -1,16 +1,16 @@
 package com.berete.realestatemanager.domain.repositories;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.berete.realestatemanager.domain.data_providers.PropertyProvider;
-import com.berete.realestatemanager.domain.models.Photo;
-import com.berete.realestatemanager.domain.models.Property;
-import com.berete.realestatemanager.domain.models.RealEstateAgent;
+import com.berete.realestatemanager.test_utils.LiveDataUtils;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
 
-import static com.berete.realestatemanager.FakeData.fakeProperty;
+import static com.berete.realestatemanager.test_utils.FakeData.fakeProperty;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.timeout;
@@ -30,8 +30,8 @@ public class PropertyRepositoryTest {
   }
 
   private void setUpMocks(){
-    when(propertyProvider.getById(fakeProperty.getId())).thenReturn(fakeProperty);
-    when(propertyProvider.getAll()).thenReturn(Collections.singletonList(fakeProperty));
+    when(propertyProvider.getById(fakeProperty.getId())).thenReturn(new MutableLiveData<>(fakeProperty));
+    when(propertyProvider.getAll()).thenReturn(new MutableLiveData<>(Collections.singletonList(fakeProperty)));
   }
 
   @Test
@@ -46,8 +46,8 @@ public class PropertyRepositoryTest {
   }
 
   @Test
-  public void getAll() {
-    assertTrue(propertyRepository.getAll().contains(fakeProperty));
+  public void getAll() throws InterruptedException {
+    assertTrue(LiveDataUtils.getLiveDataValue(propertyRepository.getAll()).contains(fakeProperty));
   }
 
   @Test

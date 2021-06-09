@@ -72,7 +72,6 @@ public class PropertyDataProvider implements PropertyProvider {
                 pointOfInterestEntities.stream()
                     .map(PointOfInterestEntity::toModel)
                     .collect(Collectors.toList()));
-            Log.d("POINT_OF_INTEREST_ASSOC", "___ :" + propertyEntity.getPointOfInterestNearby().size());
             pointOfInterestsLiveData.removeObserver(this);
 
             final LiveData<List<PhotoEntity>> photoEntitiesLiveData =
@@ -133,9 +132,6 @@ public class PropertyDataProvider implements PropertyProvider {
         .execute(
             () -> {
               final PropertyEntity propertyEntity = new PropertyEntity(property);
-              Log.d(
-                  "AGENT_ID",
-                  "IS :" + propertyEntity.agentID + " | VS :" + property.getAgent().getId());
               final int id = (int) propertyDao.create(propertyEntity)[0];
               liveId.postValue(id);
               property.setId(id);

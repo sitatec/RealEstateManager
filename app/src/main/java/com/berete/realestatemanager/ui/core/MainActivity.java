@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
   private int currentSelectedPropertyID;
   ActionBarDrawerToggle actionBarDrawerToggle;
   Toolbar toolbar;
-  PropertyFilterDialog propertyFilterDialog;
 
   public MainActivity() {
   }

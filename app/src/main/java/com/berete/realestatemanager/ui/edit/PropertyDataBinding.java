@@ -16,7 +16,7 @@ public class PropertyDataBinding extends BaseObservable {
 
   private final Property property;
   private String saleDate = "";
-  private String publicationDate = "";
+  private String publicationDate;
   private int selectedAgentPosition;
 
   public PropertyDataBinding(Property property) {
