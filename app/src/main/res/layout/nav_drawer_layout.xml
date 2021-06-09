@@ -11,6 +11,7 @@
         android:layout_gravity="bottom"
         android:background="@drawable/black_bg_gradiant"
         />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

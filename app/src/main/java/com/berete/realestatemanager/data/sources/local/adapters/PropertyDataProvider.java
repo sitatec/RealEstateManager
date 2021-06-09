@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class PropertyDataProvider implements PropertyProvider {
 
@@ -67,7 +68,11 @@ public class PropertyDataProvider implements PropertyProvider {
 
           @Override
           public void onChanged(List<PointOfInterestEntity> pointOfInterestEntities) {
-            propertyEntity.setPointOfInterestNearby(pointOfInterestEntities);
+            propertyEntity.setPointOfInterestNearby(
+                pointOfInterestEntities.stream()
+                    .map(PointOfInterestEntity::toModel)
+                    .collect(Collectors.toList()));
+            Log.d("POINT_OF_INTEREST_ASSOC", "___ :" + propertyEntity.getPointOfInterestNearby().size());
             pointOfInterestsLiveData.removeObserver(this);
 
             final LiveData<List<PhotoEntity>> photoEntitiesLiveData =
@@ -78,7 +83,10 @@ public class PropertyDataProvider implements PropertyProvider {
 
                   @Override
                   public void onChanged(List<PhotoEntity> photoEntities) {
-                    propertyEntity.setPhotoList(photoEntities);
+                    propertyEntity.setPhotoList(
+                        photoEntities.stream()
+                            .map(PhotoEntity::toModel)
+                            .collect(Collectors.toList()));
                     photoEntitiesLiveData.removeObserver(this);
                     propertyLiveData.setValue(propertyEntity);
                   }
@@ -125,7 +133,9 @@ public class PropertyDataProvider implements PropertyProvider {
         .execute(
             () -> {
               final PropertyEntity propertyEntity = new PropertyEntity(property);
-              Log.d("AGENT_ID", "IS :" + propertyEntity.agentID + " | VS :" + property.getAgent().getId());
+              Log.d(
+                  "AGENT_ID",
+                  "IS :" + propertyEntity.agentID + " | VS :" + property.getAgent().getId());
               final int id = (int) propertyDao.create(propertyEntity)[0];
               liveId.postValue(id);
               property.setId(id);

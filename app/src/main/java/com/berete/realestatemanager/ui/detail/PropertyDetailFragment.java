@@ -1,6 +1,7 @@
 package com.berete.realestatemanager.ui.detail;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class PropertyDetailFragment extends Fragment {
   }
 
   public void setProperty(Property property) {
+    Log.d("N_POINT_OF_INTEREST", "____ : " + property.getPointOfInterestNearby().size());
     binding.setProperty(property);
     binding.photoRecyclerView.setAdapter(new PhotoListAdapter(property.getPhotoList()));
     Glide.with(binding.getRoot())

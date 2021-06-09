@@ -10,22 +10,22 @@ public class LoanCalculatorDataBinding extends BaseObservable {
   // DEFAULTS
   private double loanAmount = 300_000;
   private int duration = 20;
-  private double interestRate = 0.0106;
-  private double assuranceRate = 0.0034;
+  private double interestRate = 1.06;
+  private double assuranceRate = 0.34;
   private boolean isAnnualInterestRate = true;
   private boolean isAnnualAssuranceRate = true;
 
   @Bindable
   public String getMonthlyPayment() {
-    double monthlyInterestRate = interestRate;
-    double monthlyAssuranceRate = assuranceRate;
+    double _interestRate = interestRate / 100;
+    double _assuranceRate = assuranceRate / 100;
     if (isAnnualAssuranceRate) {
-      monthlyAssuranceRate = CurrencyUtils.annualRateToMonthlyRate(assuranceRate);
+      _assuranceRate = CurrencyUtils.annualRateToMonthlyRate(_assuranceRate);
     }
     if (isAnnualInterestRate) {
-      monthlyInterestRate = CurrencyUtils.annualRateToMonthlyRate(interestRate);
+      _interestRate = CurrencyUtils.annualRateToMonthlyRate(_interestRate);
     }
-    final double totalMonthlyRate = monthlyAssuranceRate + monthlyInterestRate;
+    final double totalMonthlyRate = _assuranceRate + _interestRate;
     final double monthlyPayment = CurrencyUtils.calculateLoan(loanAmount, totalMonthlyRate, duration);
     return CurrencyUtils.convertDoubleToCurrency(monthlyPayment);
   }

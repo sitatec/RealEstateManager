@@ -31,4 +31,11 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="FormFieldLabelStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+    </style>
+
 </resources>

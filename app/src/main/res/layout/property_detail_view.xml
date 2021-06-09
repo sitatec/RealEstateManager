@@ -196,7 +196,7 @@
                             android:layout_marginTop="8dp"
                             android:drawableStart="@drawable/ic_location_24"
                             android:drawablePadding="8dp"
-                            android:text="@string/point_of_interest_nearby"
+                            android:text="@string/point_of_interests_nearby_txt"
                             android:textColor="?attr/colorPrimaryVariant"
                             android:textSize="15sp" />
 

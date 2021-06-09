@@ -224,8 +224,8 @@ public abstract class Database extends RoomDatabase {
                       propertyPOIAssocTable.propertyId = propertyId;
                       numberOfPOIByProperty = new Random().nextInt(numberOfPointOfInterest);
 
-                      while (numberOfPOIByProperty-- > 0) {
-                        currentPointOfInterestId = new Random().nextInt(numberOfPointOfInterest);
+                      while (numberOfPOIByProperty-- >= 0) {
+                        currentPointOfInterestId = new Random().nextInt(numberOfPointOfInterest) + 1;
                         propertyPOIAssocTable.pointOfInterestId = currentPointOfInterestId;
                         propertyPOIAssocDao.create(propertyPOIAssocTable);
                       }

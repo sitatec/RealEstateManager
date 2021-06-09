@@ -66,7 +66,7 @@ public class EntitiesRelationshipTest {
     // PROPERTY
     assertEquals(propertiesFromDb.get(0).property.getDescription(), fakeProperty.getDescription());
     assertEquals(
-        propertiesFromDb.get(0).pointOfInterest.get(0).getName(), fakePointOfInterest.getName());
+        propertiesFromDb.get(0).pointOfInterests.get(0).getName(), fakePointOfInterest.getName());
     assertEquals(propertiesFromDb.get(0).photos.get(0).getUrl(), fakePropertyPhoto.getUrl());
   }
 

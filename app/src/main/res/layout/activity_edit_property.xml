@@ -27,8 +27,7 @@
         android:orientation="vertical"
         tools:context=".ui.edit.EditPropertyActivity">
 
-        <include
-            layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -40,23 +39,13 @@
                 android:paddingHorizontal="16dp"
                 tools:context=".ui.edit.EditPropertyActivity">
 
-                <TextView
-                    android:id="@+id/propertyTypeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/property_type_txt"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintBottom_toTopOf="@id/priceEditContainer"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <Spinner
                     android:id="@+id/typeSpinner"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="7dp"
-                    android:layout_height="wrap_content"
+                    android:paddingVertical="16dp"
                     android:background="@drawable/custom_spinner_bg"
                     android:selectedItemPosition="@={property.selectedTypePosition}"
                     app:layout_constraintBottom_toBottomOf="@id/priceEditContainer"
@@ -69,17 +58,18 @@
                     android:id="@+id/priceEditContainer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="16dp"
                     app:boxBackgroundColor="@android:color/transparent"
                     app:boxBackgroundMode="outline"
                     app:boxCornerRadiusBottomEnd="10dp"
                     app:boxCornerRadiusBottomStart="10dp"
-                    android:layout_marginStart="7dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:layout_constraintBottom_toTopOf="@id/surfaceEditContainer"
+                    app:layout_constraintBottom_toTopOf="@id/minSurface"
                     app:layout_constraintLeft_toRightOf="@id/typeSpinner"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/propertyTypeLabel">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/priceEdit"
@@ -92,7 +82,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/surfaceEditContainer"
+                    android:id="@+id/minSurface"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -105,7 +95,7 @@
                     app:boxCornerRadiusTopStart="10dp"
                     app:layout_constraintBottom_toTopOf="@id/publicationDateContainer"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/numberOfRoomsEditContainer"
+                    app:layout_constraintRight_toLeftOf="@id/maxSurface"
                     app:layout_constraintTop_toBottomOf="@id/priceEditContainer">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -120,7 +110,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/numberOfRoomsEditContainer"
+                    android:id="@+id/maxSurface"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -130,10 +120,10 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
-                    app:layout_constraintBottom_toBottomOf="@id/surfaceEditContainer"
-                    app:layout_constraintLeft_toRightOf="@id/surfaceEditContainer"
+                    app:layout_constraintBottom_toBottomOf="@id/minSurface"
+                    app:layout_constraintLeft_toRightOf="@id/minSurface"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/surfaceEditContainer">
+                    app:layout_constraintTop_toTopOf="@id/minSurface">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/numberOfRoomsEdit"
@@ -160,7 +150,7 @@
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/surfaceEditContainer">
+                    app:layout_constraintTop_toBottomOf="@id/minSurface">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/publicationDate"
@@ -266,14 +256,11 @@
                     android:id="@+id/agentSelectorLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="10dp"
+                    style="@style/FormFieldLabelStyle"
                     android:text="@string/agent"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintTop_toBottomOf="@id/localityContainer"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/agentSelector"
-                    />
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/localityContainer" />
 
                 <Spinner
                     android:id="@+id/agentSelector"
@@ -292,6 +279,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:flexWrap="wrap"
+                    app:alignItems="center"
                     app:layout_constraintBottom_toTopOf="@id/photosScrollViewLabel"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -300,19 +288,17 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/point_of_interests_nearby_txt"
-                        android:textColor="?attr/colorPrimaryVariant" />
+                        style="@style/FormFieldLabelStyle"
+                        android:text="@string/point_of_interests_nearby_txt" />
 
                     <ImageButton
                         android:layout_width="wrap_content"
-                        app:tint="@color/white"
-                        app:backgroundTint="@color/dark_gray"
-                        android:paddingVertical="6.5dp"
                         android:layout_height="wrap_content"
                         android:onClick="@{() -> addPointOfInterest.setVisibility(View.VISIBLE)}"
-                        android:src="@drawable/ic_add_24" />
+                        android:paddingVertical="7dp"
+                        android:src="@drawable/ic_add_24"
+                        app:backgroundTint="@color/dark_gray"
+                        app:tint="@color/white" />
 
                     <LinearLayout
                         android:id="@+id/addPointOfInterest"
@@ -345,21 +331,19 @@
                     android:id="@+id/photosScrollViewLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="10dp"
+                    style="@style/FormFieldLabelStyle"
                     android:text="@string/photos_txt"
-                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toTopOf="@id/photosScrollView"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/pointOfInterestsContainer" />
 
                 <HorizontalScrollView
                     android:id="@+id/photosScrollView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     app:layout_constraintBottom_toTopOf="@id/descriptionLayout"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/photosScrollViewLabel">
 
                     <LinearLayout
@@ -376,10 +360,9 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/photoRecyclerView"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:orientation="horizontal"
-                            />
+                            tools:orientation="horizontal" />
                     </LinearLayout>
 
                 </HorizontalScrollView>

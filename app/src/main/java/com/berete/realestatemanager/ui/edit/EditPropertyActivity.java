@@ -3,7 +3,6 @@ package com.berete.realestatemanager.ui.edit;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.berete.realestatemanager.R;
@@ -26,6 +24,7 @@ import com.berete.realestatemanager.databinding.PhotoDescriptionEditorLayoutBind
 import com.berete.realestatemanager.domain.models.Photo;
 import com.berete.realestatemanager.domain.models.Property;
 import com.berete.realestatemanager.domain.models.Property.PointOfInterest;
+import com.berete.realestatemanager.ui.custom.PointOfInterestView;
 import com.berete.realestatemanager.ui.list.PhotoListAdapter;
 import com.berete.realestatemanager.ui.detail.PropertyDetailActivity;
 import com.bumptech.glide.Glide;
@@ -84,15 +83,15 @@ public class EditPropertyActivity extends AppCompatActivity {
   private void setEditMode() {
     final int propertyId = getIntent().getIntExtra(PropertyDetailActivity.PROPERTY_ID_ARG_KEY, 0);
     if (propertyId != 0) {
-      viewModel.updateProperty(propertyId).observe(this, this::setProperty);
+      viewModel.updateProperty(propertyId).observe(this, this::onPropertyDataBindingFetched);
       getSupportActionBar().setTitle(R.string.update_property_txt);
     } else {
-      viewModel.createNewProperty().observe(this, this::setProperty);
+      viewModel.createNewProperty().observe(this, this::onPropertyDataBindingFetched);
       getSupportActionBar().setTitle(R.string.create_property_txt);
     }
   }
 
-  private void setProperty(PropertyDataBinding property){
+  private void onPropertyDataBindingFetched(PropertyDataBinding property) {
     binding.setProperty(property);
     setupViews();
   }
@@ -114,10 +113,14 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void setupAgentSelector() {
-    viewModel.getAllAgents().observe(this, agentList -> {
-      final AgentSpinnerAdapter adapter = new AgentSpinnerAdapter(this, agentList);
-      binding.agentSelector.setAdapter(adapter);
-    });
+    viewModel
+        .getAllAgents()
+        .observe(
+            this,
+            agentList -> {
+              final AgentSpinnerAdapter adapter = new AgentSpinnerAdapter(this, agentList);
+              binding.agentSelector.setAdapter(adapter);
+            });
   }
 
   private void setupPhotoList() {
@@ -134,10 +137,13 @@ public class EditPropertyActivity extends AppCompatActivity {
             this,
             pointOrInterestList -> {
               TextView pointOfInterestView;
+              binding.pointOfInterestsContainer.removeViews(
+                  2, binding.pointOfInterestsContainer.getFlexItemCount() -2);
               boolean isSelected;
               for (final PointOfInterest pointOfInterest : pointOrInterestList) {
                 isSelected = viewModel.containsPointOfInterest(pointOfInterest);
-                pointOfInterestView = getPointOfInterestView(isSelected);
+                pointOfInterestView = new PointOfInterestView(this, isSelected);
+                pointOfInterestView.setOnClickListener(this::togglePointOfInterestState);
                 pointOfInterestView.setText(pointOfInterest.getName());
                 pointOfInterestView.setTag(pointOfInterest);
                 binding.pointOfInterestsContainer.addView(pointOfInterestView);
@@ -155,8 +161,8 @@ public class EditPropertyActivity extends AppCompatActivity {
             this,
             pointOfInterestId -> {
               Log.d("ON_POI_CREATED", "CALLED WITH VALUE : " + pointOfInterestName);
-              if(pointOfInterestId == null || pointOfInterestId.equals(0)) return;
-              final TextView pointOfInterestView = getPointOfInterestView(false);
+              if (pointOfInterestId == null || pointOfInterestId.equals(0)) return;
+              final TextView pointOfInterestView = new PointOfInterestView(this);
               pointOfInterest.setId(pointOfInterestId);
               pointOfInterestView.setText(pointOfInterestName);
               pointOfInterestView.setTag(pointOfInterest);
@@ -164,37 +170,13 @@ public class EditPropertyActivity extends AppCompatActivity {
             });
   }
 
-  private TextView getPointOfInterestView(boolean isChecked) {
-    final TextView pointOfInterestView = new CheckedTextView(this);
-    setPointOfInterestState(isChecked, pointOfInterestView);
-    pointOfInterestView.setPadding(20, 5, 20, 8);
-    pointOfInterestView.setMinWidth(100);
-    pointOfInterestView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
-    pointOfInterestView.setTextSize(17);
-    pointOfInterestView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-    pointOfInterestView.setOnClickListener(this::togglePointOfInterestState);
-    return pointOfInterestView;
-  }
-
   private void togglePointOfInterestState(View pointOfInterestView) {
+    ((PointOfInterestView)pointOfInterestView).toggleChecked();
     final PointOfInterest pointOfInterest = (PointOfInterest) pointOfInterestView.getTag();
     if (viewModel.containsPointOfInterest(pointOfInterest)) {
-      setPointOfInterestState(false, (TextView) pointOfInterestView);
       viewModel.removePointOrInterestFromCurrentProperty(pointOfInterest);
     } else {
-      setPointOfInterestState(true, (TextView) pointOfInterestView);
       viewModel.addPointOfInterestToCurrentProperty(pointOfInterest);
-    }
-  }
-
-  private void setPointOfInterestState(boolean isChecked, TextView pointOfInterestView) {
-    if (isChecked) {
-      pointOfInterestView.setBackgroundResource(R.drawable.checked_text_bg);
-      pointOfInterestView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-          0, 0, R.drawable.ic_check_24, 0);
-    } else {
-      pointOfInterestView.setBackgroundResource(R.drawable.unchecked_text_bg);
-      pointOfInterestView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
     }
   }
 
@@ -204,7 +186,7 @@ public class EditPropertyActivity extends AppCompatActivity {
 
   @Override
   protected void onActivityResult(
-      int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+      int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == RESULT_OK) {
       if (data != null) {

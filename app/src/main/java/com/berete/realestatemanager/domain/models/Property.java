@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Property {
 
@@ -201,6 +202,20 @@ public class Property {
     @Override
     public String toString() {
       return name;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      if (other == null || getClass() != other.getClass()) return false;
+      PointOfInterest that = (PointOfInterest) other;
+      return id == that.id &&
+          name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(id, name);
     }
   }
 

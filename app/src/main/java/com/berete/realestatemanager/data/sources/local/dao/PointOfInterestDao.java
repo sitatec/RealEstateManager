@@ -17,8 +17,9 @@ public interface PointOfInterestDao {
 
   @Query(
       "SELECT point_of_interest.* FROM point_of_interest "
-          + "JOIN property_point_of_interest_association AS ppoi_assoc "
-          + "ON ppoi_assoc.property_id = :property_id")
+          + "INNER JOIN property_point_of_interest_association "
+          + "ON property_point_of_interest_association.point_of_interest_id = point_of_interest.point_of_interest_id "
+          + "WHERE property_point_of_interest_association.property_id = :property_id")
   LiveData<List<PointOfInterestEntity>> getPointOfInterestByPropertyId(int property_id);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -32,5 +33,4 @@ public interface PointOfInterestDao {
 
   @Update
   void update(PointOfInterestEntity pointOfInterest);
-
 }

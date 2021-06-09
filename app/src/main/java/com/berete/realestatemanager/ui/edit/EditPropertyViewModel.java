@@ -29,9 +29,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class EditPropertyViewModel extends ViewModel {
   private LiveData<Integer> livePointOfInterestId;
 
-  public static final RealEstateAgent AGENT_PLACEHOLDER =
-      new RealEstateAgent("Select Agent", "file:///android_asset/person.png");
-
   // DATA_SOURCES
   private final PropertyRepository propertyRepository;
   private final PhotoRepository photoRepository;
@@ -40,11 +37,9 @@ public class EditPropertyViewModel extends ViewModel {
 
   private final MutableLiveData<PropertyDataBinding> propertyBindingLiveData =
       new MutableLiveData<>();
-  private final Executor doInBackground = Executors.newSingleThreadExecutor();
   private Property currentProperty;
 
   private LiveData<List<PointOfInterest>> allPointOfInterest;
-  private List<PointOfInterest> currentPropertyPointOfInterest;
 
   private LiveData<List<RealEstateAgent>> allAgents;
 
@@ -149,19 +144,14 @@ public class EditPropertyViewModel extends ViewModel {
     return allPointOfInterest;
   }
 
-  public List<PointOfInterest> getCurrentPropertyPointOfInterests() {
-    if (currentPropertyPointOfInterest == null) {
-      currentPropertyPointOfInterest = currentProperty.getPointOfInterestNearby();
-    }
-    return currentPropertyPointOfInterest;
-  }
-
   public void addPointOfInterestToCurrentProperty(PointOfInterest pointOfInterest) {
     currentProperty.getPointOfInterestNearby().add(pointOfInterest);
+    propertyRepository.addPointOfInterestToProperty(currentProperty.getId(), pointOfInterest.getId());
   }
 
   public void removePointOrInterestFromCurrentProperty(PointOfInterest pointOfInterest) {
     currentProperty.getPointOfInterestNearby().remove(pointOfInterest);
+    propertyRepository.removePointOfInterestFromProperty(currentProperty.getId(), pointOfInterest.getId());
   }
 
   public LiveData<Integer> createPointOfInterest(PointOfInterest pointOfInterest) {

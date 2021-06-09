@@ -9,8 +9,8 @@ import com.berete.realestatemanager.domain.models.Property;
 @Entity(tableName = "point_of_interest")
 public class PointOfInterestEntity extends Property.PointOfInterest {
 
-  @ColumnInfo(name = "point_of_interest_id")
   @PrimaryKey(autoGenerate = true)
+  @ColumnInfo(name = "point_of_interest_id")
   public int id;
 
   public PointOfInterestEntity(Property.PointOfInterest parent){
@@ -25,6 +25,7 @@ public class PointOfInterestEntity extends Property.PointOfInterest {
   }
 
   public PointOfInterestEntity toModel(){
+    super.setId(id);
     return this;
   }
 }

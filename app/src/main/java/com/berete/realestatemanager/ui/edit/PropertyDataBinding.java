@@ -7,6 +7,7 @@ import com.berete.realestatemanager.BR;
 import com.berete.realestatemanager.Utils;
 import com.berete.realestatemanager.domain.models.Property;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 
 import static com.berete.realestatemanager.domain.models.Property.PROPERTY_RELATED_DATE_FORMATTER;
@@ -61,7 +62,9 @@ public class PropertyDataBinding extends BaseObservable {
   @Bindable
   public String getPrice() {
     if(property.getPrice() == 0) return "";
-    return Double.toString(property.getPrice());
+    final NumberFormat formatter = NumberFormat.getNumberInstance();
+    formatter.setGroupingUsed(false);
+    return formatter.format(property.getPrice());
   }
 
   public void setPrice(String price) {

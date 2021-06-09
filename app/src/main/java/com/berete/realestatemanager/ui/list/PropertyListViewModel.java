@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.berete.realestatemanager.domain.models.Property;
+import com.berete.realestatemanager.domain.repositories.PointOfInterestRepository;
 import com.berete.realestatemanager.domain.repositories.PropertyRepository;
 
 import java.util.List;
@@ -16,11 +17,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class PropertyListViewModel extends ViewModel {
 
   private final PropertyRepository propertyRepository;
+  private final PointOfInterestRepository pointOfInterestRepository;
   private LiveData<List<Property>> allProperties;
+  private LiveData<List<Property.PointOfInterest>> allPointOfInterest;
 
   @Inject
-  public PropertyListViewModel(PropertyRepository propertyRepository) {
+  public PropertyListViewModel(PropertyRepository propertyRepository, PointOfInterestRepository pointOfInterestRepository) {
     this.propertyRepository = propertyRepository;
+    this.pointOfInterestRepository = pointOfInterestRepository;
   }
 
   public LiveData<List<Property>> getProperties(){
@@ -28,6 +32,13 @@ public class PropertyListViewModel extends ViewModel {
       allProperties = propertyRepository.getAll();
     }
     return allProperties;
+  }
+
+  public LiveData<List<Property.PointOfInterest>> getAllPointOfInterest(){
+    if(allPointOfInterest == null){
+      allPointOfInterest = pointOfInterestRepository.getAll();
+    }
+    return allPointOfInterest;
   }
 
 }

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
   private int currentSelectedPropertyID;
   ActionBarDrawerToggle actionBarDrawerToggle;
   Toolbar toolbar;
+  PropertyFilterDialog propertyFilterDialog;
 
   public MainActivity() {
   }
@@ -71,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
     if (item.getItemId() == R.id.editProperty) {
       startEditActivity();
       return true;
-    } else if (item.getItemId() == R.id.filter) {
-      showFilterDialog();
     }
     return super.onOptionsItemSelected(item);
   }
@@ -150,8 +149,6 @@ public class MainActivity extends AppCompatActivity {
     editPropertyIntent.putExtras(args);
     startActivity(editPropertyIntent);
   }
-
-  private void showFilterDialog() {}
 
   private void showSnackBar(String message){
     final View root = findViewById(R.id.root);

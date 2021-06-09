@@ -27,7 +27,6 @@
     <string name="type">Type</string>
     <string name="price">Price</string>
     <string name="location">Location</string>
-    <string name="point_of_interest_nearby">Point of interest nearby</string>
     <string name="agent">Agent</string>
     <string name="details_txt">Details</string>
     <string name="edit">Edit</string>
@@ -51,4 +50,12 @@
     <string name="month">Month</string>
     <string name="year">Year</string>
     <string name="property_content_provider_authorities">com.berete.realestatemanager.data.providers.PropertyProvider</string>
+    <string name="min_surface">Min surface (\u33A1)</string>
+    <string name="max_surface">Max surface (\u33A1)</string>
+    <string name="min_price">Min price (USD)</string>
+    <string name="max_price">Max price (USD)</string>
+    <string name="published_less_than_x_weeks">Published less than x weeks ago</string>
+    <string name="sold_in_the_last_x_months">Sold in the last x months</string>
+    <string name="in_the_locality">In the locality</string>
+    <string name="min_photo_count">Min photo</string>
 </resources>
