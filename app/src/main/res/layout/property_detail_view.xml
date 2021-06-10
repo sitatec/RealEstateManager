@@ -193,7 +193,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="12dp"
                             android:drawableStart="@drawable/ic_location_24"
                             android:drawablePadding="8dp"
                             android:text="@string/point_of_interests_nearby_txt"
@@ -213,6 +213,7 @@
                         android:id="@+id/locationPreview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
                         android:layout_weight="1" />
 
                 </LinearLayout>

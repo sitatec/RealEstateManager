@@ -6,6 +6,8 @@ import androidx.databinding.Bindable;
 import com.berete.realestatemanager.BR;
 import com.berete.realestatemanager.utils.CurrencyUtils;
 
+import java.text.NumberFormat;
+
 public class LoanCalculatorDataBinding extends BaseObservable {
   // DEFAULTS
   private double loanAmount = 300_000;
@@ -14,6 +16,7 @@ public class LoanCalculatorDataBinding extends BaseObservable {
   private double assuranceRate = 0.34;
   private boolean isAnnualInterestRate = true;
   private boolean isAnnualAssuranceRate = true;
+  private double contributionRate = 13;
 
   @Bindable
   public String getMonthlyPayment() {
@@ -29,6 +32,11 @@ public class LoanCalculatorDataBinding extends BaseObservable {
     final double monthlyPayment =
         CurrencyUtils.calculateLoan(loanAmount, totalMonthlyRate, duration);
     return CurrencyUtils.convertDoubleToCurrency(monthlyPayment);
+  }
+
+  @Bindable
+  public String getContribution() {
+    return CurrencyUtils.convertDoubleToCurrency(loanAmount * (contributionRate / 100));
   }
 
   @Bindable
@@ -105,5 +113,19 @@ public class LoanCalculatorDataBinding extends BaseObservable {
   public void setAnnualAssuranceRate(boolean annualAssuranceRate) {
     isAnnualAssuranceRate = annualAssuranceRate;
     notifyPropertyChanged(BR.monthlyPayment);
+  }
+
+  @Bindable
+  public String getContributionRate() {
+    return String.valueOf(contributionRate);
+  }
+
+  public void setContributionRate(String contributionRate) {
+    if (contributionRate.isEmpty()) {
+      this.contributionRate = 0;
+    } else {
+      this.contributionRate = Double.parseDouble(contributionRate);
+    }
+    notifyPropertyChanged(BR.contribution);
   }
 }

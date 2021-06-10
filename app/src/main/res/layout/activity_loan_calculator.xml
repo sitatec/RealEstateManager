@@ -44,7 +44,7 @@
                     android:id="@+id/monthlyPayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="serif"
                     android:text="@{binding.monthlyPayment}"
                     android:textColor="@color/dark_gray"
@@ -54,11 +54,38 @@
                     app:layout_constraintTop_toBottomOf="@id/monthlyPaymentLabel"
                     toos:text="$4.694" />
 
+                <TextView
+                    android:id="@+id/contributionLabel"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contribution"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/contribution"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/monthlyPayment" />
+
+                <TextView
+                    android:id="@+id/contribution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="serif"
+                    android:text="@{binding.contribution}"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/contributionLabel"
+                    toos:text="$4.694" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/loanAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="8dp"
                     app:boxBackgroundColor="@android:color/transparent"
                     app:boxBackgroundMode="outline"
@@ -69,7 +96,7 @@
                     app:layout_constraintBottom_toTopOf="@id/duration"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/monthlyPayment">
+                    app:layout_constraintTop_toBottomOf="@id/contribution">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -82,7 +109,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/duration"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:boxBackgroundColor="@android:color/transparent"
@@ -91,8 +118,9 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
+                    android:layout_marginEnd="5dp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/contributionRate"
                     app:layout_constraintTop_toBottomOf="@id/loanAmount">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -101,6 +129,33 @@
                         android:hint="@string/duration_years"
                         android:inputType="number"
                         android:text="@={binding.duration}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/contributionRate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintTop_toTopOf="@id/duration"
+                    app:layout_constraintBottom_toBottomOf="@id/duration"
+                    app:layout_constraintLeft_toRightOf="@id/duration"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loanAmount">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/contribution_rate"
+                        android:inputType="number"
+                        android:text="@={binding.contributionRate}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

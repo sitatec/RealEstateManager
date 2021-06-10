@@ -66,7 +66,8 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void saveProperty() {
-    if (viewModel.isPhotoDefined()) {
+    //    if (viewModel.isPhotoDefined()) {
+    if (viewModel.isSoldFieldValid()) {
       viewModel.persist();
       Snackbar.make(
               binding.getRoot(),
@@ -74,10 +75,15 @@ public class EditPropertyActivity extends AppCompatActivity {
               Snackbar.LENGTH_SHORT)
           .show();
     } else {
-      Snackbar.make(
-              binding.getRoot(), getString(R.string.photo_required_msg), Snackbar.LENGTH_SHORT)
+      Snackbar.make(binding.getRoot(), getString(R.string.sold_field_invalid), Snackbar.LENGTH_SHORT)
           .show();
     }
+    //    } else {
+    //      Snackbar.make(
+    //              binding.getRoot(), getString(R.string.photo_required_msg),
+    // Snackbar.LENGTH_SHORT)
+    //          .show();
+    //    }
   }
 
   private void setEditMode() {
@@ -138,7 +144,7 @@ public class EditPropertyActivity extends AppCompatActivity {
             pointOrInterestList -> {
               TextView pointOfInterestView;
               binding.pointOfInterestsContainer.removeViews(
-                  2, binding.pointOfInterestsContainer.getFlexItemCount() -2);
+                  2, binding.pointOfInterestsContainer.getFlexItemCount() - 2);
               boolean isSelected;
               for (final PointOfInterest pointOfInterest : pointOrInterestList) {
                 isSelected = viewModel.containsPointOfInterest(pointOfInterest);
@@ -171,7 +177,7 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   private void togglePointOfInterestState(View pointOfInterestView) {
-    ((PointOfInterestView)pointOfInterestView).toggleChecked();
+    ((PointOfInterestView) pointOfInterestView).toggleChecked();
     final PointOfInterest pointOfInterest = (PointOfInterest) pointOfInterestView.getTag();
     if (viewModel.containsPointOfInterest(pointOfInterest)) {
       viewModel.removePointOrInterestFromCurrentProperty(pointOfInterest);
@@ -185,8 +191,7 @@ public class EditPropertyActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onActivityResult(
-      int requestCode, int resultCode, @Nullable Intent data) {
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == RESULT_OK) {
       if (data != null) {

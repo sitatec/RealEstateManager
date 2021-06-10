@@ -1,7 +1,5 @@
 package com.berete.realestatemanager.ui.edit;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -18,8 +16,6 @@ import com.berete.realestatemanager.domain.repositories.PropertyRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -174,5 +170,12 @@ public class EditPropertyViewModel extends ViewModel {
 
   public boolean isPhotoDefined() {
     return !currentProperty.getPhotoList().isEmpty();
+  }
+
+  public boolean isSoldFieldValid(){
+    if(currentProperty.isSold()){
+      return !propertyBindingLiveData.getValue().getFormattedSaleDate().isEmpty();
+    }
+    return true;
   }
 }

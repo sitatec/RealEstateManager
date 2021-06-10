@@ -2,6 +2,8 @@ package com.berete.realestatemanager;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.os.Build;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,10 +45,18 @@ public class Utils {
    * @param context
    * @return
    */
+  @SuppressWarnings("deprecation")
   public static Boolean isInternetAvailable(Context context) {
     ConnectivityManager connectivityManager =
         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    return connectivityManager.getActiveNetworkInfo() != null
-        && connectivityManager.getActiveNetworkInfo().isConnected();
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      return connectivityManager
+          .getNetworkCapabilities(connectivityManager.getActiveNetwork())
+          .hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+    } else {
+      return connectivityManager.getActiveNetworkInfo() != null
+          && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
   }
 }
