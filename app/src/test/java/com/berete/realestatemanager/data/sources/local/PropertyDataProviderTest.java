@@ -2,6 +2,7 @@ package com.berete.realestatemanager.data.sources.local;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.berete.realestatemanager.data.sources.local.adapters.PropertyDataProvider;
 import com.berete.realestatemanager.data.sources.local.dao.PhotoDao;
@@ -22,6 +23,7 @@ import org.junit.rules.TestRule;
 import org.mockito.ArgumentCaptor;
 
 import java.util.Collections;
+import java.util.List;
 
 import static com.berete.realestatemanager.test_utils.FakeData.fakeAgentEntity;
 import static com.berete.realestatemanager.test_utils.FakeData.fakePointOfInterestEntity;
@@ -29,6 +31,7 @@ import static com.berete.realestatemanager.test_utils.FakeData.fakeProperty;
 import static com.berete.realestatemanager.test_utils.FakeData.fakePropertyEntity;
 import static com.berete.realestatemanager.test_utils.FakeData.fakePropertyPhotoEntity;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -141,6 +144,7 @@ public class PropertyDataProviderTest {
 
   @Test
   public void create() {
+    when(propertyDao.create(any())).thenReturn(new long[1]);
     propertyDataProvider.create(fakePropertyEntity);
     // The create method transform internally the Property to a new PropertyEntity (
     // to for the compatibility with room), so we can't verify the exact argument, instead we have

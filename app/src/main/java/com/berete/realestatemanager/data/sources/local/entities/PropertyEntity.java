@@ -67,7 +67,9 @@ public class PropertyEntity extends Property {
         parent.getSaleDate(),
         parent.getAgent());
     id = parent.getId();
-    agentID = parent.getAgent().getId();
+    if (parent.getAgent() != null) {
+      agentID = parent.getAgent().getId();
+    }
     setMainPhotoUrl(parent.getMainPhotoUrl());
     address = new AddressEntity(parent.getAddress());
   }
@@ -75,13 +77,13 @@ public class PropertyEntity extends Property {
   public static class AddressEntity extends Address {
 
     @Ignore
-    public AddressEntity(){}
+    public AddressEntity() {}
 
-    public AddressEntity(String locality, String postalCode, String formattedAddress){
+    public AddressEntity(String locality, String postalCode, String formattedAddress) {
       super(locality, postalCode, formattedAddress);
     }
 
-    public AddressEntity(Address address){
+    public AddressEntity(Address address) {
       super(address.getLocality(), address.getPostalCode(), address.getFormattedAddress());
     }
   }

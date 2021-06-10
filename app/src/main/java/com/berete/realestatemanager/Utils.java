@@ -1,17 +1,11 @@
 package com.berete.realestatemanager;
 
 import android.content.Context;
-import android.net.wifi.WifiManager;
-import android.text.TextUtils;
-
-import com.berete.realestatemanager.domain.models.Property;
+import android.net.ConnectivityManager;
 
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Currency;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /** Created by Philippe on 21/02/2018. */
@@ -26,6 +20,10 @@ public class Utils {
    */
   public static int convertDollarToEuro(int dollars) {
     return (int) Math.round(dollars * 0.812);
+  }
+
+  public static int convertEuroToDollar(int euros) {
+    return (int) Math.round(euros / 0.812);
   }
 
   /**
@@ -46,7 +44,9 @@ public class Utils {
    * @return
    */
   public static Boolean isInternetAvailable(Context context) {
-    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-    return wifi.isWifiEnabled();
+    ConnectivityManager connectivityManager =
+        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    return connectivityManager.getActiveNetworkInfo() != null
+        && connectivityManager.getActiveNetworkInfo().isConnected();
   }
 }

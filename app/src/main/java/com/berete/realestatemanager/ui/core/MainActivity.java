@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     findViewById(R.id.createProperty)
         .setOnClickListener(__ -> startActivity(new Intent(this, EditPropertyActivity.class)));
     isLargeScreen = findViewById(R.id.detailFragmentContainer) != null;
+    Log.d("MAIN_ACTIVITY", "__ isLargeScreen = " + isLargeScreen);
     toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     setupViews();
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
   private void setupDetailFragment() {
     final Bundle args = new Bundle();
     args.putInt(LAYOUT_ORIENTATION_KEY, LinearLayout.HORIZONTAL);
-    final PropertyDetailFragment propertyDetailFragment = PropertyDetailFragment.newInstance(args);
+    propertyDetailFragment = PropertyDetailFragment.newInstance(args);
     getSupportFragmentManager()
         .beginTransaction()
         .add(R.id.detailFragmentContainer, propertyDetailFragment)

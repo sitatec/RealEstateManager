@@ -17,8 +17,8 @@ public class LoanCalculatorDataBinding extends BaseObservable {
 
   @Bindable
   public String getMonthlyPayment() {
-    double _interestRate = interestRate / 100;
-    double _assuranceRate = assuranceRate / 100;
+    double _interestRate = interestRate;
+    double _assuranceRate = assuranceRate;
     if (isAnnualAssuranceRate) {
       _assuranceRate = CurrencyUtils.annualRateToMonthlyRate(_assuranceRate);
     }

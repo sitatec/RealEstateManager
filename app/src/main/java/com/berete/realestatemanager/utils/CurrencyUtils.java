@@ -14,11 +14,12 @@ public class CurrencyUtils {
     return numberFormat.format(number);
   }
 
-  public static double calculateLoan(double loanAmount, double totalMonthlyRate, int duration){
+  public static double calculateLoan(double loanAmount, double totalMonthlyRate, int duration) {
+    totalMonthlyRate = totalMonthlyRate / 100;
     return (loanAmount * totalMonthlyRate) / (1 - Math.pow((1 + totalMonthlyRate), -duration * 12));
   }
 
-  public static double annualRateToMonthlyRate(double annuallyRate){
-    return Math.pow(1 + annuallyRate, (double) 1 / MOTH_OF_YEAR  ) -1; // 12 -> month of year
+  public static double annualRateToMonthlyRate(double annuallyRate) {
+    return Math.pow(1 + annuallyRate, (double) 1 / MOTH_OF_YEAR) - 1; // 12 -> month of year
   }
 }

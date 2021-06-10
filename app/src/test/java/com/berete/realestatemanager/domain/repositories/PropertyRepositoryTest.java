@@ -1,12 +1,15 @@
 package com.berete.realestatemanager.domain.repositories;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
 import com.berete.realestatemanager.domain.data_providers.PropertyProvider;
 import com.berete.realestatemanager.test_utils.LiveDataUtils;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import java.util.Collections;
 
@@ -21,6 +24,9 @@ public class PropertyRepositoryTest {
 
   private PropertyProvider propertyProvider;
   private PropertyRepository propertyRepository;
+
+  @Rule
+  public TestRule rule = new InstantTaskExecutorRule();
 
   @Before
   public void setUp() {
@@ -41,8 +47,8 @@ public class PropertyRepositoryTest {
   }
 
   @Test
-  public void getById() {
-    assertEquals(propertyRepository.getById(fakeProperty.getId()), fakeProperty);
+  public void getById() throws InterruptedException {
+    assertEquals(LiveDataUtils.getLiveDataValue(propertyRepository.getById(fakeProperty.getId())), fakeProperty);
   }
 
   @Test

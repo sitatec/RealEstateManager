@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:layout_gravity="center_vertical"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="25dp"
         >
 
         <ImageView

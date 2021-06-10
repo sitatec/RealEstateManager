@@ -94,7 +94,7 @@ public class PropertyListFragment extends Fragment {
     super.onConfigurationChanged(newConfig);
     // TODO Refactoring (use bundle args for the dialog dependencies instead of dismissing it on
     //  configuration change)
-    if (propertyFilterDialog.isAdded()) {
+    if (propertyFilterDialog != null && propertyFilterDialog.isAdded()) {
       propertyFilterDialog.dismiss();
     }
   }
