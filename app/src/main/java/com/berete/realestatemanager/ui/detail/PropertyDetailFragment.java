@@ -13,11 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.berete.realestatemanager.databinding.PropertyDetailViewBinding;
 import com.berete.realestatemanager.domain.models.Property;
 import com.berete.realestatemanager.ui.list.PhotoListAdapter;
+import com.berete.realestatemanager.utils.LocationUtil;
 import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -28,6 +31,8 @@ public class PropertyDetailFragment extends Fragment {
   private int propertyId;
   private int footerLayoutOrientation;
   PropertyDetailViewBinding binding;
+
+  @Inject public LocationUtil locationUtil;
 
   public static PropertyDetailFragment newInstance(Bundle args) {
     PropertyDetailFragment fragment = new PropertyDetailFragment();
@@ -53,20 +58,21 @@ public class PropertyDetailFragment extends Fragment {
     binding = PropertyDetailViewBinding.inflate(inflater, container, false);
     binding.setDefaultPointOFInterest(new ArrayList<>());
     binding.setFooterOrientation(footerLayoutOrientation);
-    if(propertyId != 0){
+    if (propertyId != 0) {
       viewModel.getPropertyById(propertyId).observe(getViewLifecycleOwner(), this::setProperty);
     }
     return binding.getRoot();
   }
 
   public void setProperty(Property property) {
-    Log.d("N_POINT_OF_INTEREST", "____ : " + property.getPointOfInterestNearby().size());
     binding.setProperty(property);
     binding.photoRecyclerView.setAdapter(new PhotoListAdapter(property.getPhotoList()));
     Glide.with(binding.getRoot())
         .load(property.getAgent().getPhotoUrl())
         .centerCrop()
         .into(binding.agentPhoto);
-  }
 
+    final String staticMapUrl = locationUtil.getLocationStaticMapFromAddress(property.getAddress().getFormattedAddress());
+    Glide.with(binding.getRoot()).load(staticMapUrl).into(binding.locationPreview);
+  }
 }

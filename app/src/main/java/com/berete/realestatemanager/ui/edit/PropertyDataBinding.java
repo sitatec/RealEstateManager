@@ -32,9 +32,13 @@ public class PropertyDataBinding extends BaseObservable {
   }
 
   public void apply() {
+    if(publicationDate.isEmpty()){
+      // the user may remove the pub date field content.
+      publicationDate = property.getFormattedPubDate();
+    }
     property.setPublicationDate(
         LocalDate.parse(publicationDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
-    if (property.isSold()){
+    if (property.isSold() && !saleDate.isEmpty()){
       property.setSaleDate(LocalDate.parse(saleDate, PROPERTY_RELATED_DATE_FORMATTER).toEpochDay());
     }
   }

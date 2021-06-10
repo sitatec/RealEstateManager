@@ -36,12 +36,14 @@ import pub.devrel.easypermissions.EasyPermissions;
 @AndroidEntryPoint
 public class MapActivity extends AppCompatActivity {
 
-  LocationUtil locationUtil;
-  GoogleMap map;
-  PropertyListViewModel viewModel;
+  @Inject public LocationUtil locationUtil;
   @Inject public LocationProvider locationProvider;
   @Inject public LocationPermissionHandler locationPermissionHandler;
+
+  GoogleMap map;
   CameraUpdate currentLocationCamera;
+
+  PropertyListViewModel viewModel;
   PropertyFilterDialog propertyFilterDialog;
 
   List<Property> propertyList;
@@ -59,7 +61,6 @@ public class MapActivity extends AppCompatActivity {
     viewModel
         .getAllPointOfInterest()
         .observe(this, pointOfInterests -> pointOfInterestList = pointOfInterests);
-    locationUtil = new LocationUtil(this);
   }
 
   @SuppressLint("MissingPermission")

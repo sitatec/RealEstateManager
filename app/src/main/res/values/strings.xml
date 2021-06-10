@@ -22,6 +22,7 @@
     <string name="photo_desc_dialog_title">Add photo description</string>
     <string name="set_as_main">Set as main</string>
     <string name="photo_required_msg">At least one photo must be set.</string>
+    <string name="sold_field_invalid">Sold date must be specified if the Sold checkbox is checked.</string>
     <string name="media">Media</string>
     <string name="surface">Surface</string>
     <string name="type">Type</string>
@@ -61,4 +62,6 @@
     <string name="apply">Apply</string>
     <string name="reset">Reset</string>
     <string name="property_filter_dialog_title">Filter properties</string>
+    <string name="contribution_rate">Contribution rate (%)</string>
+    <string name="contribution">Contribution</string>
 </resources>
