@@ -1,6 +1,7 @@
 language: android
 dist: trusty
-
+jdk:
+  - openjdk11
 env:
   global:
     - ANDROID_ABI=armeabi-v7a
