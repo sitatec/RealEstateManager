@@ -1,8 +1,5 @@
 language: android
 dist: trusty
-os: linux
-jdk:
-  - oraclejdk8
 
 env:
   global:
