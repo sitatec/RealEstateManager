@@ -49,6 +49,7 @@ public class LoanCalculatorDataBinding extends BaseObservable {
       this.loanAmount = Double.parseDouble(loanAmount);
     }
     notifyPropertyChanged(BR.monthlyPayment);
+    notifyPropertyChanged(BR.contribution);
   }
 
   @Bindable

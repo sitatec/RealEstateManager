@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,8 +26,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -67,13 +70,13 @@ public class MapActivity extends AppCompatActivity {
   private void setupMap(GoogleMap map) {
     this.map = map;
     map.getUiSettings().setMapToolbarEnabled(false);
+    map.getUiSettings().setMyLocationButtonEnabled(false);
     map.setInfoWindowAdapter(new CustomInfoWindow(getLayoutInflater()));
     map.setOnInfoWindowClickListener(this::onInfoWindowClickListener);
 
     locationProvider.getCurrentCoordinates(
         location -> {
           map.setMyLocationEnabled(true);
-          map.getUiSettings().setMyLocationButtonEnabled(false);
           currentLocationCamera =
               CameraUpdateFactory.newLatLngZoom(
                   new LatLng(location.getLatitude(), location.getLongitude()), 14);
@@ -101,25 +104,33 @@ public class MapActivity extends AppCompatActivity {
   private void showProperties(List<Property> properties) {
     map.clear();
     final LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-    LocationUtil.GeoCoordinates currentPropertyCoordinates;
-    for (Property currentProperty : properties) {
-      currentPropertyCoordinates =
-          locationUtil.getCoordinatesFromAddress(
-              currentProperty.getAddress().getFormattedAddress(), bounds);
-      if (currentPropertyCoordinates != null) {
-        showPropertyMarker(currentProperty, currentPropertyCoordinates);
-      }
-    }
+    final CircularProgressIndicator progressIndicator = new CircularProgressIndicator(this);
+    progressIndicator.setIndeterminate(true);
+    progressIndicator.show();
+    Executors.newSingleThreadExecutor()
+        .execute(
+            () -> {
+              for (Property currentProperty : properties) {
+                showPropertyMarker(
+                    currentProperty,
+                    locationUtil.getCoordinatesFromAddress(
+                        currentProperty.getAddress().getFormattedAddress(), bounds));
+              }
+            });
   }
 
   private void showPropertyMarker(Property property, LocationUtil.GeoCoordinates coordinates) {
-    map.addMarker(
-            new MarkerOptions()
-                .position(coordinates.toLatLng())
-                .title(property.getType().name())
-                .snippet(property.getAddress().getLocality())
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.house_location)))
-        .setTag(property);
+    if (coordinates != null && property != null) {
+      runOnUiThread(
+          () ->
+              map.addMarker(
+                      new MarkerOptions()
+                          .position(coordinates.toLatLng())
+                          .title(property.getType().name())
+                          .snippet(property.getAddress().getLocality())
+                          .icon(BitmapDescriptorFactory.fromResource(R.drawable.house_location)))
+                  .setTag(property));
+    }
   }
 
   @Override
