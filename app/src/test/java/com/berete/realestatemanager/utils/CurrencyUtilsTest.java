@@ -1,6 +1,5 @@
 package com.berete.realestatemanager.utils;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,7 +13,7 @@ public class CurrencyUtilsTest {
 
   @Test
   public void calculateLoan() {
-    assertEquals(Math.rint(CurrencyUtils.calculateLoan(150_000, 0.001159, 20)), 626, 0);
+    assertEquals(Math.rint(CurrencyUtils.calculateMonthlyRepayment(150_000, 0.001159, 20)), 626, 0);
   }
 
   @Test

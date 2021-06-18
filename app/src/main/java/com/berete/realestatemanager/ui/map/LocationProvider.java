@@ -27,11 +27,12 @@ public class LocationProvider {
   private Location lastKnownLocation;
   private Consumer<Location> onResultListener;
 
+
   @Inject
   public LocationProvider(
-      Activity activity, LocationPermissionHandler locationPermissionHandler) {
+      FusedLocationProviderClient fusedLocationProviderClient, LocationPermissionHandler locationPermissionHandler) {
     this.locationPermissionHandler = locationPermissionHandler;
-    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
+    this.fusedLocationProviderClient = fusedLocationProviderClient;
     warmUpTheLocationProvider();
   }
 
@@ -70,6 +71,7 @@ public class LocationProvider {
         LocationRequest.create()
             .setInterval(100)
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
     if (locationPermissionHandler.hasPermission()) {
       fusedLocationProviderClient.requestLocationUpdates(
           locationRequest,

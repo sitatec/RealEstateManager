@@ -3,8 +3,6 @@
 
     <data>
 
-        <import type="com.berete.realestatemanager.Utils" />
-
         <variable
             name="binding"
             type="com.berete.realestatemanager.ui.loan_calculator.LoanCalculatorDataBinding" />

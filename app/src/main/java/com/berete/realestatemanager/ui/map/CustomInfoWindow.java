@@ -51,7 +51,7 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
 
     Glide.with(viewRoot).load(property.getMainPhotoUrl()).into(new CustomTarget<Drawable>() {
       @Override
-      public void onResourceReady(@NonNull @NotNull Drawable resource, @Nullable @org.jetbrains.annotations.Nullable Transition<? super Drawable> transition) {
+      public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
         propertyMainPhoto.setImageDrawable(resource);
         propertyMainPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
         lasShowPropertyId = property.getId();
@@ -59,7 +59,7 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
       }
 
       @Override
-      public void onLoadCleared(@Nullable @org.jetbrains.annotations.Nullable Drawable placeholder) {
+      public void onLoadCleared(@Nullable Drawable placeholder) {
 
       }
     });

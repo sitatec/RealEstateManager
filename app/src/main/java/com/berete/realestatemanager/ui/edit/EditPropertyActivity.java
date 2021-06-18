@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,7 +32,14 @@ import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.function.Consumer;
+
 import dagger.hilt.android.AndroidEntryPoint;
+
+import static com.berete.realestatemanager.domain.models.Property.PROPERTY_RELATED_DATE_FORMATTER;
 
 @AndroidEntryPoint
 public class EditPropertyActivity extends AppCompatActivity {
@@ -65,50 +73,30 @@ public class EditPropertyActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  private void saveProperty() {
-    //    if (viewModel.isPhotoDefined()) {
-    if (viewModel.isSoldFieldValid()) {
-      viewModel.persist();
-      Snackbar.make(
-              binding.getRoot(),
-              getString(R.string.property_successfully_saved_msg),
-              Snackbar.LENGTH_SHORT)
-          .show();
-    } else {
-      Snackbar.make(binding.getRoot(), getString(R.string.sold_field_invalid), Snackbar.LENGTH_SHORT)
-          .show();
-    }
-    //    } else {
-    //      Snackbar.make(
-    //              binding.getRoot(), getString(R.string.photo_required_msg),
-    // Snackbar.LENGTH_SHORT)
-    //          .show();
-    //    }
-  }
-
   private void setEditMode() {
     final int propertyId = getIntent().getIntExtra(PropertyDetailActivity.PROPERTY_ID_ARG_KEY, 0);
     if (propertyId != 0) {
-      viewModel.updateProperty(propertyId).observe(this, this::onPropertyDataBindingFetched);
+      viewModel.updateProperty(propertyId).observe(this, this::setupViews);
       getSupportActionBar().setTitle(R.string.update_property_txt);
     } else {
-      viewModel.createNewProperty().observe(this, this::onPropertyDataBindingFetched);
+      viewModel.createNewProperty().observe(this, this::setupViews);
       getSupportActionBar().setTitle(R.string.create_property_txt);
     }
   }
 
-  private void onPropertyDataBindingFetched(PropertyDataBinding property) {
-    binding.setProperty(property);
-    setupViews();
-  }
-
-  private void setupViews() {
+  private void setupViews(PropertyDataBinding propertyDataBinding) {
+    binding.setProperty(propertyDataBinding);
     setupTypeSelector();
     setupAgentSelector();
     setupPhotoList();
     showPointOfInterests();
+
     binding.setOnPointOfInterestAdded(this::createPointOfInterest);
     binding.pickPhoto.setOnClickListener(__ -> pickAnImage());
+    binding.publicationDate.setOnClickListener(
+        __ -> showDatePicker(propertyDataBinding::setFormattedPublicationDate));
+    binding.saleDate.setOnClickListener(
+        __ -> showDatePicker(propertyDataBinding::setFormattedSaleDate));
   }
 
   private void setupTypeSelector() {
@@ -144,7 +132,7 @@ public class EditPropertyActivity extends AppCompatActivity {
             pointOrInterestList -> {
               TextView pointOfInterestView;
               binding.pointOfInterestsContainer.removeViews(
-                  2, binding.pointOfInterestsContainer.getFlexItemCount() - 2);
+                  3, binding.pointOfInterestsContainer.getFlexItemCount() - 3);
               boolean isSelected;
               for (final PointOfInterest pointOfInterest : pointOrInterestList) {
                 isSelected = viewModel.containsPointOfInterest(pointOfInterest);
@@ -155,6 +143,43 @@ public class EditPropertyActivity extends AppCompatActivity {
                 binding.pointOfInterestsContainer.addView(pointOfInterestView);
               }
             });
+  }
+
+  private void showDatePicker(Consumer<String> onDateSelected) {
+    final Calendar calendar = Calendar.getInstance();
+    final DatePickerDialog datePickerDialog =
+        new DatePickerDialog(
+            this,
+            (view, year, month, dayOfMonth) -> {
+              final String formattedDate =
+                  LocalDate.of(year, month, dayOfMonth).format(PROPERTY_RELATED_DATE_FORMATTER);
+              onDateSelected.accept(formattedDate);
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH));
+    datePickerDialog.show();
+  }
+
+  private void saveProperty() {
+    if (viewModel.isPhotoDefined()) {
+      if (viewModel.isSoldFieldValid()) {
+        viewModel.persist();
+        Snackbar.make(
+                binding.getRoot(),
+                getString(R.string.property_successfully_saved_msg),
+                Snackbar.LENGTH_SHORT)
+            .show();
+      } else {
+        Snackbar.make(
+                binding.getRoot(), getString(R.string.sold_field_invalid), Snackbar.LENGTH_SHORT)
+            .show();
+      }
+    } else {
+      Snackbar.make(
+              binding.getRoot(), getString(R.string.photo_required_msg), Snackbar.LENGTH_SHORT)
+          .show();
+    }
   }
 
   private void createPointOfInterest(String pointOfInterestName) {

@@ -6,8 +6,6 @@ import androidx.databinding.Bindable;
 import com.berete.realestatemanager.BR;
 import com.berete.realestatemanager.utils.CurrencyUtils;
 
-import java.text.NumberFormat;
-
 public class LoanCalculatorDataBinding extends BaseObservable {
   // DEFAULTS
   private double loanAmount = 300_000;
@@ -23,14 +21,14 @@ public class LoanCalculatorDataBinding extends BaseObservable {
     double _interestRate = interestRate;
     double _assuranceRate = assuranceRate;
     if (isAnnualAssuranceRate) {
-      _assuranceRate = CurrencyUtils.annualRateToMonthlyRate(_assuranceRate);
+      _assuranceRate = _assuranceRate / 12;
     }
     if (isAnnualInterestRate) {
-      _interestRate = CurrencyUtils.annualRateToMonthlyRate(_interestRate);
+      _interestRate = _interestRate / 12;
     }
     final double totalMonthlyRate = _assuranceRate + _interestRate;
     final double monthlyPayment =
-        CurrencyUtils.calculateLoan(loanAmount, totalMonthlyRate, duration);
+        CurrencyUtils.calculateMonthlyRepayment(loanAmount, totalMonthlyRate, duration);
     return CurrencyUtils.convertDoubleToCurrency(monthlyPayment);
   }
 

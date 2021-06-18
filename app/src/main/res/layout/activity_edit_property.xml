@@ -153,6 +153,8 @@
                     app:layout_constraintTop_toBottomOf="@id/minSurface">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:cursorVisible="false"
+                        android:focusable="false"
                         android:id="@+id/publicationDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -193,6 +195,8 @@
                     app:layout_constraintTop_toTopOf="@id/sold">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:cursorVisible="false"
+                        android:focusable="false"
                         android:id="@+id/saleDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -292,10 +296,11 @@
                         android:text="@string/point_of_interests_nearby_txt" />
 
                     <ImageButton
+                        android:id="@+id/showPointOfInterestForm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{() -> addPointOfInterest.setVisibility(View.VISIBLE)}"
                         android:paddingVertical="7dp"
+                        android:onClick="@{() -> addPointOfInterest.setVisibility(View.VISIBLE)}"
                         android:src="@drawable/ic_add_24"
                         app:backgroundTint="@color/dark_gray"
                         app:tint="@color/white" />

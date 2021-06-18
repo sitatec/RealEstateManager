@@ -4,11 +4,14 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.berete.realestatemanager.BR;
-import com.berete.realestatemanager.Utils;
 import com.berete.realestatemanager.domain.models.Property;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
 
 import static com.berete.realestatemanager.domain.models.Property.PROPERTY_RELATED_DATE_FORMATTER;
 
@@ -24,7 +27,7 @@ public class PropertyDataBinding extends BaseObservable {
     if (property.getPublicationDate() != 0){
       publicationDate = property.getFormattedPubDate();
     }else {
-      publicationDate = Utils.getTodayDate();
+      publicationDate = getTodayDate();
     }
     if (property.getSaleDate() != 0){
       saleDate = property.getFormattedSaleDate();
@@ -172,6 +175,7 @@ public class PropertyDataBinding extends BaseObservable {
 
   public void setFormattedPublicationDate(String date) {
     this.publicationDate = date;
+    notifyPropertyChanged(BR.formattedPublicationDate);
   }
 
   @Bindable
@@ -181,6 +185,7 @@ public class PropertyDataBinding extends BaseObservable {
 
   public void setFormattedSaleDate(String saleDate) {
     this.saleDate = saleDate;
+    notifyPropertyChanged(BR.formattedSaleDate);
   }
 
 //  @Bindable
@@ -191,4 +196,9 @@ public class PropertyDataBinding extends BaseObservable {
 //  public void setAgentName(String agentName) {
 //    property.getAgent().setName(agentName);
 //  }
+
+  public static String getTodayDate() {
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    return dateFormat.format(new Date());
+  }
 }

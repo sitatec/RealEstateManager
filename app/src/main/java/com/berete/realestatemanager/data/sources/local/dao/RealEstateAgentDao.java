@@ -33,5 +33,5 @@ public interface RealEstateAgentDao {
 
   @Transaction
   @Query("SELECT * FROM real_estate_agent")
-  List<Relationships.RealEstateAgentWithProperties> getAllAgentWithProperties();
+  LiveData<List<Relationships.RealEstateAgentWithProperties>> getAllAgentWithProperties();
 }

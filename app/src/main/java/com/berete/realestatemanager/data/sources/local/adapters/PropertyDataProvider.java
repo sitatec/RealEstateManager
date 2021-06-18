@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 
 import com.berete.realestatemanager.data.sources.local.dao.PhotoDao;
 import com.berete.realestatemanager.data.sources.local.dao.PointOfInterestDao;
@@ -99,29 +100,45 @@ public class PropertyDataProvider implements PropertyProvider {
   public LiveData<List<Property>> getAll() {
     if (allProperties == null) {
       allProperties = new MutableLiveData<>();
-      doInBackground.execute(
-          () -> {
-            final List<RealEstateAgentWithProperties> realEstateAgentWithProperties =
-                realEstateAgentDao.getAllAgentWithProperties();
-            final List<Property> properties = new ArrayList<>();
+      realEstateAgentDao
+          .getAllAgentWithProperties()
+          .observeForever(
+              agentWithProperties -> {
+                final List<Property> properties = new ArrayList<>();
 
-            for (RealEstateAgentWithProperties entry : realEstateAgentWithProperties) {
-              properties.addAll(entry.toProperties());
-            }
-            allProperties.postValue(properties);
-          });
+                for (RealEstateAgentWithProperties entry : agentWithProperties) {
+                  properties.addAll(entry.toProperties());
+                }
+
+                allProperties.postValue(properties);
+              });
     }
     return allProperties;
   }
 
   @Override
-  public void update(Property property) {
-    propertyDao.update(new PropertyEntity(property));
+  public void update(Property updatedProperty) {
+    propertyDao.update(new PropertyEntity(updatedProperty));
+
+    final List<Property> updatedList =
+        allProperties.getValue().stream()
+            .map(
+                currentPropertyInTheList -> {
+                  if (currentPropertyInTheList.getId() == updatedProperty.getId()) {
+                    return updatedProperty;
+                  }
+                  return currentPropertyInTheList;
+                })
+            .collect(Collectors.toList());
+
+    allProperties.postValue(updatedList);
   }
 
   @Override
   public void delete(Property property) {
     propertyDao.delete(new PropertyEntity(property));
+    allProperties.getValue().remove(property);
+    allProperties.postValue(allProperties.getValue());
   }
 
   @Override

@@ -56,7 +56,7 @@ public class LocationUtil {
   }
 
   public String getLocationStaticMapFromAddress(String address) {
-    return STATIC_MAP_BASE_URL + "&size=200x200&zoom=15&markers=color:red|" + address;
+    return STATIC_MAP_BASE_URL + "&size=200x200&zoom=14&markers=color:red|" + address;
   }
 
   // --------- INNERS ---------- //
