@@ -82,7 +82,7 @@ public class PropertyDataProviderTest {
     agentWithProperties.tempProperties =
         Collections.singletonList(propertyWithPhotoAndPointOfInterest);
     when(realEstateAgentDao.getAllAgentWithProperties())
-        .thenReturn(Collections.singletonList(agentWithProperties));
+        .thenReturn(new MutableLiveData<>(Collections.singletonList(agentWithProperties)));
   }
 
   @Test

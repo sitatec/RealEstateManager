@@ -35,7 +35,7 @@ public class PropertyDataProvider implements PropertyProvider {
   private final PropertyPointOfInterestCrossRefDao propertyPointOfInterestCrossRefDao;
 
   private final Executor doInBackground = Executors.newSingleThreadExecutor();
-  private MutableLiveData<List<Property>> allProperties;
+  final private MutableLiveData<List<Property>> allProperties = new MutableLiveData<>(new ArrayList<>());
   PropertyEntity propertyEntity;
 
   public PropertyDataProvider(
@@ -98,8 +98,7 @@ public class PropertyDataProvider implements PropertyProvider {
 
   @Override
   public LiveData<List<Property>> getAll() {
-    if (allProperties == null) {
-      allProperties = new MutableLiveData<>();
+    if (allProperties.getValue().isEmpty()) {
       realEstateAgentDao
           .getAllAgentWithProperties()
           .observeForever(

@@ -1,0 +1,40 @@
+language: android
+dist: trusty
+os: linux
+jdk:
+  - oraclejdk8
+
+env:
+  global:
+    - ANDROID_ABI=armeabi-v7a
+    - EMULATOR_API_LEVEL=android-22
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-30.0.3
+    - android-30
+    - $EMULATOR_API_LEVEL
+    - sys-img-${ANDROID_ABI}-${EMULATOR_API_LEVEL}
+
+before_install:
+  - yes | sdkmanager "platforms;android-30"
+
+script:
+  - chmod +x gradlew
+
+  # The api keys are stored in the local.properties in my local env. So i have to create Fake key
+  # because I can't store my key in a public repo, that means only the unit test will be executed
+  # in the ci env because the ui tests need the key. I will find a better solution.
+  - printf "\nGOOGLE_MAP_STATIC_API_KEY=SECRET_0 \nGOOGLE_MAP_API_KEY=SECRET_1" > local.properties
+  - ./gradlew test
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
