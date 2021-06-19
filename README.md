@@ -18,6 +18,8 @@ A demo video is available [here](#demo)
   - SOLID principles applied
   - Adapter design pattern used to adapt room's entities and DAOs without depending on them
   
+# Entity-relationship Diagram
+![Entities Relationship Real Estate Manager](https://github.com/sitatec/RealEstateManager/blob/master/assets/EntityRelationship.png)
 
 # Build
 To be able to build the project you need google maps and google static maps API key(s), and store them in your local.properties file like this:
