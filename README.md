@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/sitatec/RealEstateManager.svg?branch=master)](https://travis-ci.com/sitatec/RealEstateManager) [![Maintainability](https://api.codeclimate.com/v1/badges/7ebf01f657a570d9786f/maintainability)](https://codeclimate.com/github/sitatec/RealEstateManager/maintainability)
 # RealEstateManager
+A Real Estate Manager that stores the data in an SQLite database using Room.
 
 ![Berete Real estate manager android app](https://github.com/sitatec/RealEstateManager/blob/master/assets/real_estate_manager_banner.png)
 ![Berete RealEstateManager mobile app](https://github.com/sitatec/RealEstateManager/blob/master/assets/REM_banner_small_screens.png)
