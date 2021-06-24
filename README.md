@@ -33,5 +33,4 @@ If you don't want to store your keys in the local.properties, you will have to e
 # Demo
 Click on the image below, you will be redirected to the video page.
 
-_Watch the video in full screen for better quality_
-[![Berete RealEstateManager demo video](https://github.com/sitatec/RealEstateManager/blob/master/assets/screenshot.png)](https://drive.google.com/file/d/1LSv3KUzzywHuQjkeqI5HgW6QNaCOGtUZ/view?usp=sharing)
+[![Berete RealEstateManager demo video](https://github.com/sitatec/RealEstateManager/blob/master/assets/screenshot.png)](https://drive.google.com/file/d/1LSv3KUzzywHuQjkeqI5HgW6QNaCOGtUZ/preview)
